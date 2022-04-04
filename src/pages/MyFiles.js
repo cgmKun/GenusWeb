@@ -17,6 +17,7 @@ class MyFile extends React.Component {
                 <br />
 
                 <span>
+                    {/* eslint-disable-next-line react/prop-types */}
                     {this.props.test}
                 </span>
 

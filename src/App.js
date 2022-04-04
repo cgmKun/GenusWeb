@@ -13,6 +13,7 @@ function App() {
                     </Route>
                     
                     <Route exact path="/dashboard/:test" render={(props) => (
+                        // eslint-disable-next-line react/prop-types
                         <MyFile test={props.match.params.test} />
                     )} />
 
