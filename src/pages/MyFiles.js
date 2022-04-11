@@ -1,5 +1,8 @@
 import React from "react";
+//import '../styles/General.scss'
+import '../styles/MyFiles.scss'
 
+import {Container} from 'react-bootstrap';
 //import SideBar from "../components/Sidebar";
 
 class MyFile extends React.Component {
@@ -9,7 +12,13 @@ class MyFile extends React.Component {
 
     render() {
         return (
-            <div>
+            <>
+                <Container className="myFiles">
+                    <h1>My files</h1>
+                </Container>
+
+                {/*<div className="myFiles">
+
                 <span>
                     Hola Charlie!
                 </span>
@@ -17,11 +26,14 @@ class MyFile extends React.Component {
                 <br />
 
                 <span>
-                    {/* eslint-disable-next-line react/prop-types */}
+
                     {this.props.test}
                 </span>
 
-            </div>
+            </div>*/}
+            </>
+            
+            
         )
     }
 }
