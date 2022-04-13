@@ -2,8 +2,7 @@ $blue_cemex: #293064;
 $light: #ffffff;
 * {
     margin: 0;
-    padding: 0;
-    
+    padding: 0; 
 }
 
 
@@ -17,7 +16,7 @@ $light: #ffffff;
 }
 
 .content {
-    border-radius: 50px 0% 0% 0%;
+    border-radius: 20px 0% 0% 0%;
     background-color: $light;
     width: 100%;
     justify-content: center;
@@ -25,13 +24,25 @@ $light: #ffffff;
 }
 .navbar {
     background-color: $blue_cemex;
-    height: 50px;
-    //padding: 1rem 2rem;
-    //border-bottom: 1px;
+    height: 70px;
 }
 
 .sidebar {
     background-color: $blue_cemex;
     width: 100px;
-    height: calc(100vh - 52px);
+    height: calc(100vh - 70px);
 }
+
+.icon{
+    font-size: 50px;
+    //       up 
+    padding: 150px 0px 100px 18px;
+    color: #B5D0FF;
+}
+
+.logo{
+    width: 120px;
+    padding: 20px 0px 0px 10px;
+
+}
+

@@ -1,9 +1,10 @@
 import React from "react";
-//import '../styles/General.scss'
 import '../styles/MyFiles.scss'
 
 import {Container} from 'react-bootstrap';
-//import SideBar from "../components/Sidebar";
+
+import BoxFiles from "../components/BoxFiles";
+import Navbuttons from "../components/Navbuttons";
 
 class MyFile extends React.Component {
     constructor(props) {
@@ -14,8 +15,12 @@ class MyFile extends React.Component {
         return (
             <>
                 <Container className="myFiles">
-                    <h1>My files</h1>
+                    <h1 className="headTitle">MY FILES</h1>
+                    <div className="BoxContainer">
+                        <BoxFiles/>
+                    </div>
                 </Container>
+                <Navbuttons/>
 
                 {/*<div className="myFiles">
 

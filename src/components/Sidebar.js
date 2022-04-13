@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import '../styles/General.scss';
+import { GoFileDirectory } from "react-icons/go";
+import { MdDashboard } from "react-icons/md";
 
 export default class SideBar extends React.Component {
     render() {
@@ -8,10 +10,10 @@ export default class SideBar extends React.Component {
             <div className="sidebar">
                 <ul>
                     <li>
-                        <Link to = ""> My Files </Link>   
+                        <Link to = ""> <GoFileDirectory className="icon"/> </Link>   
                     </li>
                     <li>
-                        <Link to = ""> Dashboards </Link>
+                        <Link to=""> <MdDashboard className="icon" /> </Link>   
                     </li>
     
                 </ul>
