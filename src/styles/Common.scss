@@ -1,0 +1,31 @@
+// ------------------------------
+// Fonts
+// ------------------------------
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;500;700&display=swap');
+
+// ------------------------------
+// Colors
+// ------------------------------
+
+$cemex-blue: #293064;
+$cemex-blue-0: #e6e8f0;
+$cemex-blue-1: #c6cae0;
+$cemex-blue-2: #939bc1;
+$cemex-blue-3: #6971a2;
+$cemex-blue-4: #454e83;
+$cemex-blue-5: #293064;
+$cemex-blue-6: #1e2350;
+$cemex-blue-7: #15183b;
+$cemex-blue-8: #0c0e27;
+$cemex-blue-9: #050612;
+
+$white: #ffffff;
+
+// Body Properties
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto';
+}

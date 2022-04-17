@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;500;700&display=swap');
 
-$blue_cemex: #293064;
+$blue-cemex: #293064;
 $blue_light: #00ADFD;
 $BFsize: 15px;
 
@@ -13,7 +13,7 @@ $BFsize: 15px;
 
 .headTitle{
     font-family: 'Roboto';
-    color: $blue_cemex;    
+    color: $blue-cemex;    
     margin: 0px 0px 40px 0px;
 }
 
@@ -63,7 +63,7 @@ $BFsize: 15px;
     height: 40px;
     margin: 25px 0px 0px 890px;
 
-    background: $blue_cemex;
+    background: $blue-cemex;
     border-radius: 15px;
 
     font-family: 'Roboto', sans-serif;

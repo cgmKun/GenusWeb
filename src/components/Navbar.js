@@ -1,21 +1,20 @@
-import React from "react";
-import Barnav from 'react-bootstrap/Navbar';
-import Container from 'react-bootstrap/Container';
-
-import '../styles/General.scss';
+import { React, Component } from "react";
+import { Nav } from '@douyinfe/semi-ui';
 import logo from '../images/logo-cemex.png';
 
-export default class Navbar extends React.Component {
+import '../styles/Navbar.scss'
+
+export default class Navbar extends Component {
     render() {
+        // TODO: Add onclick to the cemex logo
         return (
-            <>
-                <Barnav bg="light">
-                    <Container>
-                        <Barnav.Brand href="#home"> <img src={logo} className='logo' /> </Barnav.Brand>
-                    </Container>
-                </Barnav>
-               
-            </>
+            <div >
+                <Nav className='navbar' mode='horizontal' >
+                    <Nav.Header>
+                        <img src={logo} className='logo' />
+                    </Nav.Header>
+                </Nav>
+            </div>
         )
     }
 }
