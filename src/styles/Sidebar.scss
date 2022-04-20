@@ -1,0 +1,38 @@
+@import './Common.scss';
+
+.sidebars {
+    background-color: $cemex-blue;
+    border-top: 1px solid $cemex-blue-7;
+    font-family: 'Roboto';
+    height: calc(100vh - 70px);
+
+    .sidebar-icon {
+        font-size: 20px;
+        color: #FFFFFF;
+    }
+
+    .label {
+        color: #FFFFFF;
+    }
+
+    .semi-navigation-item {
+        &:hover {
+            background-color: $cemex-blue-3;
+        }
+    }
+
+    .semi-navigation-item-selected {
+        background-color: $cemex-blue-7;
+    }
+
+    .footer {
+        &.semi-navigation-footer {
+            .semi-navigation-collapse-btn > .semi-button {
+                &:hover {
+                    background-color: $cemex-blue-3;
+                }
+                color: white;
+            }
+        }
+    }
+}

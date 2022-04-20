@@ -1,6 +1,10 @@
 import React from "react";
+import '../styles/MyFiles.scss'
 
-//import SideBar from "../components/Sidebar";
+import {Container} from 'react-bootstrap';
+
+import BoxFiles from "../components/BoxFiles";
+import Navbuttons from "../components/Navbuttons";
 
 class MyFile extends React.Component {
     constructor(props) {
@@ -9,7 +13,17 @@ class MyFile extends React.Component {
 
     render() {
         return (
-            <div>
+            <>
+                <Container className="myFiles">
+                    <h1 className="headTitle">MY FILES</h1>
+                    <div className="BoxContainer">
+                        <BoxFiles/>
+                    </div>
+                </Container>
+                <Navbuttons/>
+
+                {/*<div className="myFiles">
+
                 <span>
                     Hola Charlie!
                 </span>
@@ -17,11 +31,14 @@ class MyFile extends React.Component {
                 <br />
 
                 <span>
-                    {/* eslint-disable-next-line react/prop-types */}
+
                     {this.props.test}
                 </span>
 
-            </div>
+            </div>*/}
+            </>
+            
+            
         )
     }
 }
