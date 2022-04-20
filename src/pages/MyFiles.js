@@ -1,44 +1,20 @@
-import React from "react";
+import { React, Component } from "react";
+import { Typography } from '@douyinfe/semi-ui';
+
+import ReportsTable from "../components/MyFiles/ReportsTable";
+import ActionButtons from "../components/MyFiles/ActionButtons";
 import '../styles/MyFiles.scss'
 
-import {Container} from 'react-bootstrap';
-
-import BoxFiles from "../components/BoxFiles";
-import Navbuttons from "../components/Navbuttons";
-
-class MyFile extends React.Component {
-    constructor(props) {
-        super(props)
-    }
-
+class MyFile extends Component {
     render() {
+        const { Title } = Typography
+
         return (
-            <>
-                <Container className="myFiles">
-                    <h1 className="headTitle">MY FILES</h1>
-                    <div className="BoxContainer">
-                        <BoxFiles/>
-                    </div>
-                </Container>
-                <Navbuttons/>
-
-                {/*<div className="myFiles">
-
-                <span>
-                    Hola Charlie!
-                </span>
-
-                <br />
-
-                <span>
-
-                    {this.props.test}
-                </span>
-
-            </div>*/}
-            </>
-            
-            
+            <div className='my-files-content'>
+                <Title className="my-files-title">My Files</Title>
+                <ReportsTable />
+                <ActionButtons />
+            </div>
         )
     }
 }
