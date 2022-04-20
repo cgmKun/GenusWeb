@@ -23,9 +23,7 @@ export default class Sidebar extends Component {
                     footer={{
                         className: 'footer',
                         collapseButton: true,
-                    }}
-                >
-                </ Nav>
+                    }} />
             </Sider>
         )
     }
