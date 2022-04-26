@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard'
 import MyFile from './pages/MyFiles';
 
 import './styles/App.scss'
+import { Redirect } from 'react-router-dom';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
                             <div className='content-margin'>
                                 <div className='content-wrapper'>
                                     <Switch>
+                                        <Redirect from="/" to="/myfiles" exact />
                                         <Route exact path="/myfiles">
                                             <MyFile />
                                         </Route>
