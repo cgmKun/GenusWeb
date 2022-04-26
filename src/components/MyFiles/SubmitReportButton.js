@@ -30,12 +30,12 @@ class SubmitReportButton extends Component {
 
         if (Object.keys(errors).length === 0) {
             this.handleOk(values);
+        } else {
+            Toast.error({
+                content: 'Please, fill all the required fields to continue',
+                duration: 3,
+            })
         }
-        
-        Toast.error({
-            content: 'Please, fill all the required fields to continue',
-            duration: 3,
-        })
 
         return errors;
     }
@@ -50,17 +50,113 @@ class SubmitReportButton extends Component {
             visible: false
         });
 
-        Toast.success({
-            content: 'File Uploaded Successfully',
-            duration: 3,
-        })
-
-        console.log(values);
+        this.createReport(values);
     }
 
     handleCancel() {
         this.setState({
             visible: false
+        });
+    }
+
+    createReport(values) {
+        const request = { //TODO: ADD THE SUBMIT DATE TO THE MUTATION QUERY
+            query: `
+                mutation {
+                    createReport(reportInput: {reportTitle: "${values.reportTitle}", author: "${values.author}", submitDate: "MOVER A MOMENT.JS LAS FECHAS"}) {
+                        _id
+                    }
+                }
+            `
+        }
+
+        fetch('http://localhost:8000/api', {
+            method: 'POST',
+            body: JSON.stringify(request),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Falied POST');
+            }
+
+            return res.json();
+
+        }).then(resData => {
+            if (resData.errors) {
+                Toast.error({
+                    content: 'Submit Error: ' + resData.errors[0].message,
+                    duration: 3
+                });
+            } else {
+                Toast.success({
+                    content: 'File Uploaded Successfully',
+                    duration: 3,
+                });
+
+                // TODO: REVISE THE AWAIT ON THE FIRST ELEMENT WHEN MUTATING THE DB WITH GRAPH QL
+                this.createDefect(values.defects[0], resData.data.createReport._id); 
+
+                if (values.defects.length > 1) {
+                    values.defects.forEach(defect => {
+                        this.createDefect(defect, resData.data.createReport._id);
+                    });
+                }
+            }
+
+        }).catch(err => {
+            Toast.error({
+                content: 'Network Error: Failed to submit a new report',
+                duration: 3
+            });
+
+            console.log(err);
+        });
+    }
+
+    createDefect(defect, reportId) {
+        console.log(defect)
+        const request = { //TODO: ON THE REQUEST SEE A WAY TO PROCESS CORRECTLY THE defect.description FIELD, Maybe remove the \n to keep the consistency with the input data
+            query: `
+                mutation {
+                    createDefect(defectInput: {
+                        issueKey: "${defect.issueKey}",
+                        status: "${defect.status}",
+                        priority: "${defect.priority}",
+                        severity: "${defect.severity}",
+                        projectKey: "${defect.projectKey}",
+                        issueType: "${defect.issueType}",
+                        created: "${defect.created}",
+                        assignee: "${defect.assignee}",
+                        digitalService: "${defect.digitalService}",
+                        summary: "${defect.summary}",
+                        description: "description",
+                        linkedReport: "${reportId}"
+                    }) {
+                        _id
+                    }
+                }
+            `
+        }
+
+        fetch('http://localhost:8000/api', {
+            method: 'POST',
+            body: JSON.stringify(request),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Falied POST');
+            }
+
+            return res.json();
+
+        }).then(resData => {
+            console.log(resData);
+        }).catch(err => {
+            console.log(err);
         });
     }
 
