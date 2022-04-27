@@ -96,6 +96,8 @@ class SubmitReportButton extends Component {
                 });
 
                 // TODO: REVISE THE AWAIT ON THE FIRST ELEMENT WHEN MUTATING THE DB WITH GRAPH QL
+                // TODO: REVISE WHY WITH THE TEST DATA IT DOES NOT WAIT THE INFORMATION AS REQUIRED
+                // TODO: CHECK IF YOU CAN MAKE A THEN CATCH ROUTINE FOR THIS PART OF THE CODE
                 this.createDefect(values.defects[0], resData.data.createReport._id); 
 
                 if (values.defects.length > 1) {
@@ -117,7 +119,7 @@ class SubmitReportButton extends Component {
 
     createDefect(defect, reportId) {
         console.log(defect)
-        const request = { //TODO: ON THE REQUEST SEE A WAY TO PROCESS CORRECTLY THE defect.description FIELD, Maybe remove the \n to keep the consistency with the input data
+        const request = {
             query: `
                 mutation {
                     createDefect(defectInput: {
@@ -131,7 +133,7 @@ class SubmitReportButton extends Component {
                         assignee: "${defect.assignee}",
                         digitalService: "${defect.digitalService}",
                         summary: "${defect.summary}",
-                        description: "description",
+                        description: "${defect.description.replace(/\r?\n|\r/g, " ")}",
                         linkedReport: "${reportId}"
                     }) {
                         _id
