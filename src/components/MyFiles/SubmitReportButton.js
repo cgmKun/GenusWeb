@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Papa from "papaparse";
+import moment from 'moment';
+
 import { Modal, Button, Form, useFormApi, Upload, Toast } from '@douyinfe/semi-ui';
 import '../../styles/MyFiles/SubmitReportButton.scss'
 
@@ -60,10 +62,10 @@ class SubmitReportButton extends Component {
     }
 
     createReport(values) {
-        const request = { //TODO: ADD THE SUBMIT DATE TO THE MUTATION QUERY
+        const request = {
             query: `
                 mutation {
-                    createReport(reportInput: {reportTitle: "${values.reportTitle}", author: "${values.author}", submitDate: "MOVER A MOMENT.JS LAS FECHAS"}) {
+                    createReport(reportInput: {reportTitle: "${values.reportTitle}", author: "${values.author}", submitDate: "${moment().format('DD/MM/YYYY')}"}) {
                         _id
                     }
                 }
