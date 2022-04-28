@@ -77,8 +77,12 @@ class ReportsTable extends Component {
     
     render() {
         const reports = this.state.reports;
+        
+        reports.forEach(report => {
+            console.log(report.author)
+        })
 
-        return <Table className='report-table' columns={this.tableColumns()} dataSource={reports} pagination={{pageSize: 5}} />;
+        return <Table className='report-table' columns={this.tableColumns()} dataSource={reports} pagination={{pageSize: 5}} loading={this.state.reports ? false : true} />;
     }
 }
 

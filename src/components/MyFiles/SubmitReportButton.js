@@ -96,17 +96,21 @@ class SubmitReportButton extends Component {
                     content: 'File Uploaded Successfully',
                     duration: 3,
                 });
+            }
 
-                // TODO: REVISE THE AWAIT ON THE FIRST ELEMENT WHEN MUTATING THE DB WITH GRAPH QL
-                // TODO: REVISE WHY WITH THE TEST DATA IT DOES NOT WAIT THE INFORMATION AS REQUIRED
-                // TODO: CHECK IF YOU CAN MAKE A THEN CATCH ROUTINE FOR THIS PART OF THE CODE
-                this.createDefect(values.defects[0], resData.data.createReport._id); 
+            return resData;
 
-                if (values.defects.length > 1) {
-                    values.defects.forEach(defect => {
-                        this.createDefect(defect, resData.data.createReport._id);
-                    });
-                }
+        }).then(testData => {
+            
+            if (testData.errors) {
+                Toast.error({
+                    content: 'Submit Error: ' + testData.errors[0].message,
+                    duration: 3
+                });
+            } else { 
+                values.defects.forEach(defect => {
+                    this.createDefect(defect, testData.data.createReport._id);
+                });
             }
 
         }).catch(err => {
@@ -217,4 +221,4 @@ class SubmitReportButton extends Component {
     }
 }
 
-export default SubmitReportButton;
+export default SubmitReportButton
