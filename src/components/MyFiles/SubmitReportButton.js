@@ -53,6 +53,11 @@ class SubmitReportButton extends Component {
         });
 
         this.createReport(values);
+
+        Toast.info({
+            content: 'Uploading Report',
+            duration: 2
+        });
     }
 
     handleCancel() {
@@ -92,26 +97,8 @@ class SubmitReportButton extends Component {
                     duration: 3
                 });
             } else {
-                Toast.success({
-                    content: 'File Uploaded Successfully',
-                    duration: 3,
-                });
-            }
-
-            return resData;
-
-        }).then(testData => {
-            
-            if (testData.errors) {
-                Toast.error({
-                    content: 'Submit Error: ' + testData.errors[0].message,
-                    duration: 3
-                });
-            } else { 
-                values.defects.forEach(defect => {
-                    this.createDefect(defect, testData.data.createReport._id);
-                });
-            }
+                this.createDefects(values.defects, resData.data.createReport._id);
+            }            
 
         }).catch(err => {
             Toast.error({
@@ -123,25 +110,34 @@ class SubmitReportButton extends Component {
         });
     }
 
-    createDefect(defect, reportId) {
-        console.log(defect)
+    createDefects(defects, reportId) {
+        let defectsQuery = "";
+        
+        defects.forEach(defect => {
+            defectsQuery += `
+                        {
+                            issueKey: "${defect.issueKey.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            status: "${defect.status.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            priority: "${defect.priority.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            severity: "${defect.severity.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            projectKey: "${defect.projectKey.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            issueType: "${defect.issueType.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            created: "${defect.created.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            assignee: "${defect.assignee.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            digitalService: "${defect.digitalService.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            summary: "${defect.summary.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            description: "${defect.description.replace(/\r?\n|\r/g, " ").replaceAll(/[`~!@#$%^&*()_|+\-=?;:'",.<>{}[\]\\/]/gi, '').replaceAll('', '')}",
+                            linkedReport: "${reportId}"
+                        },
+            `
+        })
+
         const request = {
             query: `
                 mutation {
-                    createDefect(defectInput: {
-                        issueKey: "${defect.issueKey}",
-                        status: "${defect.status}",
-                        priority: "${defect.priority}",
-                        severity: "${defect.severity}",
-                        projectKey: "${defect.projectKey}",
-                        issueType: "${defect.issueType}",
-                        created: "${defect.created}",
-                        assignee: "${defect.assignee}",
-                        digitalService: "${defect.digitalService}",
-                        summary: "${defect.summary}",
-                        description: "${defect.description.replace(/\r?\n|\r/g, " ")}",
-                        linkedReport: "${reportId}"
-                    }) {
+                    createDefects(defects: [
+                        ${defectsQuery}
+                    ]) {
                         _id
                     }
                 }
@@ -162,7 +158,17 @@ class SubmitReportButton extends Component {
             return res.json();
 
         }).then(resData => {
-            console.log(resData);
+            if (resData.errors) {
+                Toast.error({
+                    content: 'Submit Reports Error: ' + resData.errors[0].message,
+                    duration: 3
+                });
+            } else {
+                Toast.success({
+                    content: 'File Uploaded Successfully',
+                    duration: 3,
+                });
+            }
         }).catch(err => {
             console.log(err);
         });
