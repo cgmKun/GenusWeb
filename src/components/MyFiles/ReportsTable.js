@@ -2,11 +2,54 @@ import { React, Component } from "react";
 import { Table } from '@douyinfe/semi-ui';
 
 class ReportsTable extends Component { 
-    render() {
-        const columns = [
+    state = {
+        reports: []
+    }
+    
+    componentDidMount() {
+        this.fetchReports();
+    }
+
+    fetchReports() {
+        const request = {
+            query: `
+                query {
+                    reports {
+                    _id
+                        reportTitle
+                    author
+                    submitDate
+                    }
+                }
+            `
+        }
+        
+        fetch('http://localhost:8000/api', {
+            method: 'POST',
+            body: JSON.stringify(request),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Falied POST');
+            }
+
+            return res.json();
+
+        }).then(resData => {
+            const reports = resData.data.reports;
+            this.setState({reports: reports});
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
+    tableColumns() {
+        return [
             {
-                title: 'Record Name',
-                dataIndex: 'recordTitle',
+                title: 'Report Name',
+                dataIndex: 'reportTitle',
                 render: (text) => {
                     return (
                         <div>{text}</div>
@@ -14,12 +57,12 @@ class ReportsTable extends Component {
                 }
             },
             {
-                title: 'Owner',
-                dataIndex: 'owner',
+                title: 'Author',
+                dataIndex: 'author',
             },
             {
-                title: 'Uploaded',
-                dataIndex: 'dateUploaded',
+                title: 'Submit Date',
+                dataIndex: 'submitDate',
                 render: (text) => {
                     return (
                         <div>
@@ -28,79 +71,18 @@ class ReportsTable extends Component {
                     );
                 }
     
-            },
-            {
-                title: 'Last Modified',
-                dataIndex: 'lastModifiedDate',
             }
         ];
-        const data = [
-            {
-                key: '1',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Carlos Mora',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-            {
-                key: '2',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Carlos Mora',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-            {
-                key: '3',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Carlos Mora',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-            {
-                key: '4',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Aylin Camacho',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-            {
-                key: '5',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Aylin Camacho',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-            {
-                key: '6',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Aylin Camacho',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-            {
-                key: '7',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Valeria Conde',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-            {
-                key: '8',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Rodrigo Montelongo',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-            {
-                key: '9',
-                recordTitle: 'Reporte de 20 de Junio',
-                owner: 'Santiago Arias',
-                dateUploaded: '28/06/2021',
-                lastModifiedDate: '18/12/2021'
-            },
-        ];
+    }
+    
+    render() {
+        const reports = this.state.reports;
+        
+        reports.forEach(report => {
+            console.log(report.author)
+        })
 
-        return <Table className='report-table' columns={columns} dataSource={data} pagination={{pageSize: 5}} />;
+        return <Table className='report-table' columns={this.tableColumns()} dataSource={reports} pagination={{pageSize: 5}} loading={this.state.reports ? false : true} />;
     }
 }
 

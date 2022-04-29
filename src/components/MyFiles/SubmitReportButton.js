@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Papa from "papaparse";
+import moment from 'moment';
+
 import { Modal, Button, Form, useFormApi, Upload, Toast } from '@douyinfe/semi-ui';
 import '../../styles/MyFiles/SubmitReportButton.scss'
 
@@ -60,10 +62,10 @@ class SubmitReportButton extends Component {
     }
 
     createReport(values) {
-        const request = { //TODO: ADD THE SUBMIT DATE TO THE MUTATION QUERY
+        const request = {
             query: `
                 mutation {
-                    createReport(reportInput: {reportTitle: "${values.reportTitle}", author: "${values.author}", submitDate: "MOVER A MOMENT.JS LAS FECHAS"}) {
+                    createReport(reportInput: {reportTitle: "${values.reportTitle}", author: "${values.author}", submitDate: "${moment().format('DD/MM/YYYY')}"}) {
                         _id
                     }
                 }
@@ -94,15 +96,21 @@ class SubmitReportButton extends Component {
                     content: 'File Uploaded Successfully',
                     duration: 3,
                 });
+            }
 
-                // TODO: REVISE THE AWAIT ON THE FIRST ELEMENT WHEN MUTATING THE DB WITH GRAPH QL
-                this.createDefect(values.defects[0], resData.data.createReport._id); 
+            return resData;
 
-                if (values.defects.length > 1) {
-                    values.defects.forEach(defect => {
-                        this.createDefect(defect, resData.data.createReport._id);
-                    });
-                }
+        }).then(testData => {
+            
+            if (testData.errors) {
+                Toast.error({
+                    content: 'Submit Error: ' + testData.errors[0].message,
+                    duration: 3
+                });
+            } else { 
+                values.defects.forEach(defect => {
+                    this.createDefect(defect, testData.data.createReport._id);
+                });
             }
 
         }).catch(err => {
@@ -117,7 +125,7 @@ class SubmitReportButton extends Component {
 
     createDefect(defect, reportId) {
         console.log(defect)
-        const request = { //TODO: ON THE REQUEST SEE A WAY TO PROCESS CORRECTLY THE defect.description FIELD, Maybe remove the \n to keep the consistency with the input data
+        const request = {
             query: `
                 mutation {
                     createDefect(defectInput: {
@@ -131,7 +139,7 @@ class SubmitReportButton extends Component {
                         assignee: "${defect.assignee}",
                         digitalService: "${defect.digitalService}",
                         summary: "${defect.summary}",
-                        description: "description",
+                        description: "${defect.description.replace(/\r?\n|\r/g, " ")}",
                         linkedReport: "${reportId}"
                     }) {
                         _id
@@ -213,4 +221,4 @@ class SubmitReportButton extends Component {
     }
 }
 
-export default SubmitReportButton;
+export default SubmitReportButton
