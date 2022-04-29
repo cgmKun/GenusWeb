@@ -1,15 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
 import { Switch, Route } from 'react-router-dom';
 import { Layout, LocaleProvider } from '@douyinfe/semi-ui';
 import en_US from '@douyinfe/semi-ui/lib/es/locale/source/en_US';
+
 import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard'
 import MyFile from './pages/MyFiles';
+import DevActions from './pages/DevActions';
 
 import './styles/App.scss'
-import { Redirect } from 'react-router-dom';
 
 function App() {
 
@@ -33,6 +35,10 @@ function App() {
                             
                                         <Route exact path="/dashboard">
                                             <Dashboard/>
+                                        </Route>
+
+                                        <Route exact path="/dev-actions">
+                                            <DevActions />
                                         </Route>
                                     </Switch>
                                 </div>
