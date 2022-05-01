@@ -1,5 +1,19 @@
 @import './Common.scss';
 
-.des{
-    width: 50px;
+.container{
+    padding: 30px 0px 0px 30px;
+    display: flex;
+}
+
+.cards-container{
+    display: grid;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    //top right botton left
+
+}
+
+.size-car{
+    width: 150px;
+    height: 150px;
 }
