@@ -9,8 +9,8 @@ class GroupCards extends React.Component {
         const { Meta } = Card;
 
         return (
-            <Row gutter={24} className='cards-container'>
-                <Col lg={3} sm={6}>
+            <Row gutter={16} className='cards-container'>
+                <Col md={6}>
                     <Card className='size-car' bodyStyle={{
                         display: 'flex',
                         alignItems: 'center',
@@ -22,17 +22,17 @@ class GroupCards extends React.Component {
                         />
                     </Card>
                 </Col>
-                <Col lg={3} sm={6}>
+                <Col md={6}>
                     <Card className='size-car' >
                         Semi Design is a design system developed and maintained by IES-FE & IES-UED.
                     </Card>
                 </Col> 
-                <Col lg={3} sm={6}>
+                <Col md={6}>
                     <Card className='size-car' >
                         Semi Design is a design system developed and maintained by IES-FE & IES-UED.
                     </Card>
                 </Col> 
-                <Col lg={3} sm={6}>
+                <Col md={6}>
                     <Card className='size-car' >
                         Semi Design is a design system developed and maintained by IES-FE & IES-UED.
                     </Card>
