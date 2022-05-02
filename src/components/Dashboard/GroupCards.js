@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Space} from '@douyinfe/semi-ui';
+import { Card, Row, Col} from '@douyinfe/semi-ui';
 
 
 import "../../styles/Dashboard.scss"
@@ -9,24 +9,36 @@ class GroupCards extends React.Component {
         const { Meta } = Card;
 
         return (
-            <Space className = 'cards-container' >
-                <Card className='size-car' bodyStyle={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between'
-                }}
-                >
-                    <Meta
-                        title="90 issues"
-                    />
-                </Card>
-                <Card className='size-car' >
-                    Semi Design is a design system developed and maintained by IES-FE & IES-UED.
-                </Card>
-                <Card className='size-car' >
-                    Semi Design is a design system developed and maintained by IES-FE & IES-UED.
-                </Card>
-            </Space>
+            <Row gutter={24} className='cards-container'>
+                <Col lg={3} sm={6}>
+                    <Card className='size-car' bodyStyle={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between'
+                    }}
+                    >
+                        <Meta
+                            title="90 issues"
+                        />
+                    </Card>
+                </Col>
+                <Col lg={3} sm={6}>
+                    <Card className='size-car' >
+                        Semi Design is a design system developed and maintained by IES-FE & IES-UED.
+                    </Card>
+                </Col> 
+                <Col lg={3} sm={6}>
+                    <Card className='size-car' >
+                        Semi Design is a design system developed and maintained by IES-FE & IES-UED.
+                    </Card>
+                </Col> 
+                <Col lg={3} sm={6}>
+                    <Card className='size-car' >
+                        Semi Design is a design system developed and maintained by IES-FE & IES-UED.
+                    </Card>
+                </Col>   
+            </Row>
+            
 
         )
 

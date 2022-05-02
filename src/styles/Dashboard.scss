@@ -2,11 +2,11 @@
 
 .container{
     padding: 30px 0px 0px 30px;
-    display: flex;
 }
 
 .cards-container{
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 10px;
     margin-right: 10px;
     //top right botton left
@@ -14,8 +14,8 @@
 }
 
 .size-car{
-    width: 140px;
-    height: 150px;
+    //width: 250px;
+    //height: 100px;
 }
 
 .chart-area{

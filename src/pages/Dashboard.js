@@ -1,5 +1,5 @@
 import { React, Component } from "react";
-import Container from 'react-bootstrap/Container'
+import { Row, Col } from '@douyinfe/semi-ui';
 
 //import DeffectModal from "../components/Dashboard/DeffectModal";
 import DefectsOnGroup from "../components/Dashboard/DefectsOnGroup";
@@ -11,13 +11,18 @@ import "../styles/Dashboard.scss"
 class Dashboard extends Component {
     render () {
         return(
-            <Container fluid className="container">
-                <div className="chart-area" >
-                    <GraphGroup/>
-                    <GroupCards/>
-                </div>
-                <DefectsOnGroup/>
-            </Container>
+            <div className="container">
+                <GroupCards/>
+                <Row>
+                    <Col md={8}>
+                        <GraphGroup/>
+                    </Col>
+                    <Col md={16}>
+                        <DefectsOnGroup/>
+                    </Col>
+                    
+                </Row>
+            </div>
         )
     }
 }

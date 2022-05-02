@@ -74,7 +74,7 @@ class DefectsOnGroup extends Component {
     render() {
         const groups = this.state.groups; //
 
-        return <Table className='report-table' columns={this.tableColumns()} dataSource={groups} pagination={{ pageSize: 9 }} />;
+        return <Table className='report-table' columns={this.tableColumns()} dataSource={groups} pagination={{ pageSize: 8 }} />;
     }
 }
 
