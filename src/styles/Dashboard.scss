@@ -6,7 +6,7 @@
 }
 
 .cards-container{
-    display: grid;
+    display: flex;
     margin-bottom: 10px;
     margin-right: 10px;
     //top right botton left
@@ -14,6 +14,19 @@
 }
 
 .size-car{
-    width: 150px;
+    width: 140px;
     height: 150px;
+}
+
+.chart-area{
+   
+}
+
+.chart{
+    width: 100%;
+    padding-bottom: 30px;
+}
+
+.info-area{
+    size: 100%;
 }
