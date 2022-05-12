@@ -5,8 +5,16 @@ import { IconMore } from '@douyinfe/semi-icons';
 //import DeffecTable from './DeffectTable';
 
 class DefectsOnGroup extends Component {
-    state = {
-        groups: []
+
+    constructor() {
+        super();
+        this.state = { 
+            groups: [],
+            visible: false 
+        };
+        this.showDialog = this.showDialog.bind(this);
+        this.handleOk = this.handleOk.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
     }
 
     componentDidMount() {
@@ -48,13 +56,6 @@ class DefectsOnGroup extends Component {
         });
     }
 
-    constructor() {
-        super();
-        this.state = { visible: false };
-        this.showDialog = this.showDialog.bind(this);
-        this.handleOk = this.handleOk.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-    }
     showDialog() {
         this.setState({
             visible: true
@@ -148,7 +149,7 @@ class DefectsOnGroup extends Component {
     render() {
         const groups = this.state.groups; //
 
-        return <Table className='report-table' columns={this.tableColumns()} dataSource={groups} pagination={{ pageSize: 8 }} />;
+        return <Table className='report-table' columns={this.tableColumns()} dataSource={groups} pagination={{ pageSize: 10 }} />;
     }
 }
 
