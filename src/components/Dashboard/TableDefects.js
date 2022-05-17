@@ -1,20 +1,51 @@
 import { React, Component } from "react";
-import { Table } from '@douyinfe/semi-ui';
+import { Table, Modal} from '@douyinfe/semi-ui';
+import autoBind from "react-autobind";
 //import { IconMore } from '@douyinfe/semi-icons';
 
 //import DeffecTable from './DeffectTable';
 
-class DefectsOnGroup extends Component {
+const getRowKey = record => {
+    return `${record.key}`;
+};
 
-    constructor() {
-        super();
-        this.state = { 
+class TableDefects extends Component {
+
+    constructor(props, context) {
+        super(props, context);
+        autoBind(this);
+        this.state = {
             groups: [],
-            visible: false 
+            selectedRowKey: null,
+            visible: false
+
         };
         this.showDialog = this.showDialog.bind(this);
         this.handleOk = this.handleOk.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
+    }
+
+    setRowKey(record) {
+        const selectedRowKey = getRowKey(record);
+        console.log(record);
+        console.log(selectedRowKey, typeof selectedRowKey);
+        this.setState({ selectedRowKey });
+    }
+
+    showDialog() {
+        this.setState({
+            visible: true
+        });
+    }
+    handleOk() {
+        this.setState({
+            visible: false
+        });
+    }
+    handleCancel() {
+        this.setState({
+            visible: false
+        });
     }
 
     componentDidMount() {
@@ -56,21 +87,6 @@ class DefectsOnGroup extends Component {
         });
     }
 
-    showDialog() {
-        this.setState({
-            visible: true
-        });
-    }
-    handleOk() {
-        this.setState({
-            visible: false
-        });
-    }
-    handleCancel() {
-        this.setState({
-            visible: false
-        });
-    }
 
     tableColumns() {
         return [
@@ -94,25 +110,50 @@ class DefectsOnGroup extends Component {
                     );
                 }
 
-            },
-            {
-                title: '',
-                dataIndex: 'description',
-                render: () => {
-                    
-                    return (
-                        <></>
-                    );
-                }
             }
         ];
     }
 
     render() {
         const groups = this.state.groups; //
+        const { selectedRowKey } = this.state;
 
-        return <Table className='report-table' columns={this.tableColumns()} dataSource={groups} pagination={{ pageSize: 10 }} />;
+
+        return (
+            <>
+                <Table
+                    className='report-table'
+                    columns={this.tableColumns()}
+                    dataSource={groups}
+                    pagination={{ pageSize: 10 }}
+
+                    rowKey={record => getRowKey(record)}
+                    rowClassName={record =>
+                        getRowKey(record) === selectedRowKey ? "highlighted" : ""
+                    }
+                    onRow={record => {
+                        return {
+                            onClick: () => {
+                                this.setState({ visible: true });
+                                this.setRowKey(record);
+                            }
+                        };
+                    }}
+                />
+
+                <Modal
+                    title="Basic Modal"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                >
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                    <p>Some contents...</p>
+                </Modal>
+            </>
+        );
     }
 }
 
-export default DefectsOnGroup
+export default TableDefects

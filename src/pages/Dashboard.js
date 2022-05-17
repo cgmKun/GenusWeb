@@ -2,7 +2,8 @@ import { React, Component } from "react";
 import { Row, Col } from '@douyinfe/semi-ui';
 
 //import DeffectModal from "../components/Dashboard/DeffectModal";
-import DefectsOnGroup from "../components/Dashboard/DefectsOnGroup";
+//import DefectsOnGroup from "../components/Dashboard/DefectsOnGroup";
+import TableDefects from "../components/Dashboard/TableDefects";
 import GraphGroup from "../components/Dashboard/GraphGroup";
 
 import "../styles/Dashboard.scss"
@@ -17,7 +18,7 @@ class Dashboard extends Component {
                         <GraphGroup/>
                     </Col>
                     <Col md={15}>
-                        <DefectsOnGroup/>
+                        <TableDefects/>
                     </Col>
                     
                 </Row>
