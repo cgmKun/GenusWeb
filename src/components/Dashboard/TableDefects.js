@@ -17,9 +17,7 @@ class TableDefects extends Component {
         this.state = {
             groups: [],
             selectedRowKey: null,
-            RowKey: "",
-            RowSummary: "",
-            RowDescription: "",
+            infoRow: [],
             visible: false
 
         };
@@ -138,7 +136,7 @@ class TableDefects extends Component {
                     onRow={record => {
                         return {
                             onClick: () => {
-                                this.setState({ visible: true, RowKey: record.issueKey, RowSummary: record.summary, RowDescription: record.description });
+                                this.setState({ visible: true, infoRow: record});
                                 this.setRowKey(record);
                             }
                         };
@@ -168,15 +166,15 @@ class TableDefects extends Component {
                                     textOverflow: 'ellipsis',
                                 }}
                             >
-                                {this.state.RowKey}
+                                {this.state.infoRow.issueKey}
                             </p>
                             <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Summary </span>
                             <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0'}}>
-                                {this.state.RowSummary}
+                                {this.state.infoRow.summary}
                             </p>
                             <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Description </span>
                             <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                                {this.state.RowDescription}
+                                {this.state.infoRow.description}
                             </p>
                         </Space>
                     </div>
