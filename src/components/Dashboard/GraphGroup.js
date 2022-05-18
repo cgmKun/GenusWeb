@@ -1,43 +1,104 @@
-import React from 'react';
+import { React, Component } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
-
 import '../../styles/Dashboard.scss'
 
-export const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-        {
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)',
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)',
-            ],
-            borderWidth: 1,
-        },
-    ],
-};
+class Graph2 extends Component {
+    state = {
+        groups: []
+    }
 
-export default function GraphGroup() {
+    componentDidMount() {
+        this.fetchReports();
+    }
 
-    return (
-        <div className='chart' >
-            <Doughnut data={data} />
-        </div>
-    );
+    fetchReports() {
+        const request = {
+            query: `
+            query {
+                groups{
+                    groupTitle
+                    defects{
+                        _id
+                    }
+                }
+            }
+        `
+        }
+
+        fetch('http://localhost:8000/api', {
+            method: 'POST',
+            body: JSON.stringify(request),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            if (res.status !== 200 && res.status !== 201) {
+                throw new Error('Falied POST');
+            }
+
+            return res.json();
+
+        }).then(resData => {
+            const groups = resData.data.groups; //Json ya formateado
+            this.setState({ groups: groups });
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
+    tableColumns() {
+        return [
+            {
+                title: 'Group',
+                dataIndex: 'groupTitle',
+                render: (text) => {
+                    return (
+                        <div>{text}</div>
+                    );
+                }
+            },
+        ];
+    }
+
+    render() {
+
+        const groups = this.state.groups; //
+        const labels_aux = [];
+        const data_aux = [];
+        groups.forEach(group => {
+            labels_aux.push(group.groupTitle)
+            data_aux.push(group.defects.length)
+        })
+        const data = {
+            labels: labels_aux,
+            datasets: [
+                {
+                    label: '# of Groups',
+                    data: data_aux,
+                    backgroundColor: [
+                        'rgb(226, 215, 97)',
+                        'rgb(103, 148, 220)',
+                        'rgb(163, 103, 220)',
+                        'rgb(159, 230, 93)',
+                        'rgb(222, 139, 101)',
+                        'rgb(140, 85, 224)',
+                        'rgb(201, 81, 68)'
+                    ],
+                    hoverOffset: 4
+                }
+            ]
+
+        }
+
+        return (
+            <div className='chart' >
+                <Doughnut data={data} />
+            </div>
+        );
+    }
 }
+
+export default Graph2

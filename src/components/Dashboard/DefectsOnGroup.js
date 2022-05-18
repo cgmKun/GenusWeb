@@ -1,6 +1,6 @@
 import { React, Component } from "react";
-import { Table, Modal, Button, Space } from '@douyinfe/semi-ui';
-import { IconMore } from '@douyinfe/semi-icons';
+import { Table } from '@douyinfe/semi-ui';
+//import { IconMore } from '@douyinfe/semi-icons';
 
 //import DeffecTable from './DeffectTable';
 
@@ -99,47 +99,9 @@ class DefectsOnGroup extends Component {
                 title: '',
                 dataIndex: 'description',
                 render: () => {
+                    
                     return (
-                        <>
-                            <IconMore onClick={this.showDialog} />
-                            <Modal
-                                title="Information"
-                                visible={this.state.visible}
-                                onOk={this.handleOk}
-                                onCancel={this.handleCancel}
-                                footer={
-                                    <Button type="primary" onClick={this.handleOk}>
-                                        Close
-                                    </Button>
-                                }
-                            >
-                                <div style={{ padding: 12, border: '1px solid var(--semi-color-border)', margin: 12 }}>
-                                    <Space vertical align=''>
-                                        <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Issue </span>
-                                        <p
-                                            style={{
-                                                color: 'var(--semi-color-text-2)',
-                                                margin: '4px 0',
-                                                //width: 420,
-                                                whiteSpace: 'nowrap',
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis',
-                                            }}
-                                        >
-                                            {`DCM021CX0118-23971`}
-                                        </p>
-                                        <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Summary </span>
-                                        <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                                            {`QA - DE ReadyMix go Order Details screen showing blank screen`}
-                                        </p>
-                                        <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Description </span>
-                                        <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                                            {`QA - DE ReadyMix go Order Details screen showing blank screen_x000D_\n_x000D_\n*Data*_x000D_\nBauer@mailinator.com_x000D_\nCemex!2020_x000D_\n_x000D_\n*Steps*_x000D_\nLogin to Readymix go app using the above credentials (or any QA credentials)_x000D_\nselect the jobsite or all the jobsites_x000D_\nGo to any order with any status_x000D_\nOrder details screen will be blank_x000D_\n_x000D_\n*Expected Behaviour*_x000D_\nThe Order Details screen should show order specs._x000D_\n_x000D_\n !image-2021-12-27-13-35-35-519.png|thumbnail!`}
-                                        </p>
-                                    </Space>
-                                </div>
-                            </Modal>
-                        </>
+                        <></>
                     );
                 }
             }
