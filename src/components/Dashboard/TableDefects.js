@@ -1,22 +1,25 @@
 import { React, Component } from "react";
-import { Table, Modal} from '@douyinfe/semi-ui';
+import { Table, Modal, Button, Space} from '@douyinfe/semi-ui';
 import autoBind from "react-autobind";
 //import { IconMore } from '@douyinfe/semi-icons';
 
-//import DeffecTable from './DeffectTable';
+//import DeffecTable from './DeffectTable'; , record.summary, record.description
 
 const getRowKey = record => {
-    return `${record.key}`;
+    return `${record.issueKey}`;
 };
 
 class TableDefects extends Component {
 
-    constructor(props, context) {
-        super(props, context);
+    constructor() {
+        super();
         autoBind(this);
         this.state = {
             groups: [],
             selectedRowKey: null,
+            RowKey: "",
+            RowSummary: "",
+            RowDescription: "",
             visible: false
 
         };
@@ -27,9 +30,10 @@ class TableDefects extends Component {
 
     setRowKey(record) {
         const selectedRowKey = getRowKey(record);
-        console.log(record);
-        console.log(selectedRowKey, typeof selectedRowKey);
-        this.setState({ selectedRowKey });
+        //console.log(record);
+        //console.log(selectedRowKey, typeof selectedRowKey);
+        this.setState({ selectedRowKey: selectedRowKey});
+        //console.log(this.state.selectedRowKey);
     }
 
     showDialog() {
@@ -134,7 +138,7 @@ class TableDefects extends Component {
                     onRow={record => {
                         return {
                             onClick: () => {
-                                this.setState({ visible: true });
+                                this.setState({ visible: true, RowKey: record.issueKey, RowSummary: record.summary, RowDescription: record.description });
                                 this.setRowKey(record);
                             }
                         };
@@ -142,14 +146,40 @@ class TableDefects extends Component {
                 />
 
                 <Modal
-                    title="Basic Modal"
+                    title="Information"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
+                    footer={
+                        <Button type="primary" onClick={this.handleOk}>
+                            Cerrar
+                        </Button>
+                    }
                 >
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
-                    <p>Some contents...</p>
+                    <div style={{padding: 12, border: '1px solid var(--semi-color-border)', margin: 12}}>
+                        <Space vertical align="">
+                            <span style={{color: 'var(--semi-color-text-0)', fontWeight: 500}}> Issue </span>
+                            <p
+                                style={{
+                                    color: 'var(--semi-color-text-2)',
+                                    margin: '4px 0',
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                }}
+                            >
+                                {this.state.RowKey}
+                            </p>
+                            <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Summary </span>
+                            <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0'}}>
+                                {this.state.RowSummary}
+                            </p>
+                            <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Description </span>
+                            <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
+                                {this.state.RowDescription}
+                            </p>
+                        </Space>
+                    </div>
                 </Modal>
             </>
         );
