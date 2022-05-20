@@ -150,14 +150,23 @@ class DefectsOnGroup extends Component {
                         rowClassName={record =>
                             getRowKey(record) === selectedRowKey ? "highlighted" : ""
                         }
-                        onRow={record => {
-                            return {
-                                onClick: () => {
-                                    this.setState({ visible: true, infoRow: record });
-                                    this.setRowKey(record);
+                        onRow={
+                            (record, index) => {
+                                if(index % 2 === 0){
+                                    return {
+                                        style: {
+                                            background: 'rgb(217, 231, 255, 0.5)',
+                                        }
+                                    }
                                 }
-                            };
-                        }}
+                                return {
+                                    onClick: () => {
+                                        this.setState({ visible: true, infoRow: record });
+                                        this.setRowKey(record);
+                                    },
+                                }
+                            }
+                        }
                     />
 
                     <Modal

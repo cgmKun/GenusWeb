@@ -94,7 +94,7 @@ class ReportsTable extends Component {
                     style: {
                         background: 'rgb(217, 231, 255, 0.5)',
                     }
-                };
+                }
             } else {
                 return {};
             }
