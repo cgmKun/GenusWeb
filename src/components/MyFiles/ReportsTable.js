@@ -91,12 +91,14 @@ class ReportsTable extends Component {
         const handleRow = (record, index) => {
             if (index % 2 === 0) {
                 return {
-                    style: {
-                        background: 'rgb(217, 231, 255, 0.5)',
-                    }
+                    
                 }
             } else {
-                return {};
+                return {
+                    style: {
+                        background: 'rgb(217, 231, 255, 0.4)',
+                    }
+                };
             }
         };
 
@@ -104,7 +106,15 @@ class ReportsTable extends Component {
             console.log(report.author)
         })
 
-        return <Table className='report-table' onRow={handleRow} columns={this.tableColumns()} dataSource={reports} pagination={{ pageSize: 5 }} loading={this.state.reports ? false : true} />;
+        return <Table className='report-table' 
+            onHeaderRow={() => {
+                return {
+                    className: 'header'
+                };
+            }}
+            onRow={handleRow} columns={this.tableColumns()} 
+            dataSource={reports} pagination={{ pageSize: 5 }} 
+            loading={this.state.reports ? false : true} />;
     }
 }
 

@@ -1,6 +1,8 @@
 import { React, Component } from "react";
 import { Table, Modal, Button, Space, Tabs} from '@douyinfe/semi-ui';
 import autoBind from "react-autobind";
+
+import "../../styles/Dashboard.scss"
 //import { IconMore } from '@douyinfe/semi-icons';
 
 //import DeffecTable from './DeffectTable'; , record.summary, record.description
@@ -139,7 +141,7 @@ class DefectsOnGroup extends Component {
             TabList.push(obj);
 
             const html = 
-                <div>
+                <>
                     <Table
                         className='report-table'
                         columns={this.tableColumns()}
@@ -152,13 +154,13 @@ class DefectsOnGroup extends Component {
                         }
                         onRow={
                             (record, index) => {
-                                if(index % 2 === 0){
+                                if(index % 2 === 1){
                                     return {
                                         style: {
                                             background: 'rgb(217, 231, 255, 0.5)',
                                         }
                                     }
-                                }
+                                } 
                                 return {
                                     onClick: () => {
                                         this.setState({ visible: true, infoRow: record });
@@ -167,6 +169,11 @@ class DefectsOnGroup extends Component {
                                 }
                             }
                         }
+                        onHeaderRow={() => {
+                            return {
+                                className: 'header'
+                            };
+                        }}
                     />
 
                     <Modal
@@ -205,7 +212,7 @@ class DefectsOnGroup extends Component {
                             </Space>
                         </div>
                     </Modal>
-                </div>;
+                </>;
             ContentList.push(html);
             cont = cont + 1;
         })
@@ -216,7 +223,7 @@ class DefectsOnGroup extends Component {
         return (
             <>
                 <Tabs 
-                    type="card"
+                    type="line"
                     tabList={TabList}
                     onChange={key => {
                         this.onTabClick(key, 'key');
