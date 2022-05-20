@@ -1,11 +1,12 @@
 import { React, Component } from "react";
 import { Table } from '@douyinfe/semi-ui';
+import { IconFolder } from '@douyinfe/semi-icons';
 
-class ReportsTable extends Component { 
+class ReportsTable extends Component {
     state = {
         reports: []
     }
-    
+
     componentDidMount() {
         this.fetchReports();
     }
@@ -23,7 +24,7 @@ class ReportsTable extends Component {
                 }
             `
         }
-        
+
         fetch('http://localhost:8000/api', {
             method: 'POST',
             body: JSON.stringify(request),
@@ -39,7 +40,7 @@ class ReportsTable extends Component {
 
         }).then(resData => {
             const reports = resData.data.reports;
-            this.setState({reports: reports});
+            this.setState({ reports: reports });
         }).catch(err => {
             console.log(err);
         });
@@ -47,6 +48,15 @@ class ReportsTable extends Component {
 
     tableColumns() {
         return [
+            {
+                title: '',
+                dataIndex: '',
+                render: () => {
+                    return (
+                        <IconFolder style={{ color: '#FFAC00' }} size="extra-large" />
+                    );
+                }
+            },
             {
                 title: 'Report Name',
                 dataIndex: 'reportTitle',
@@ -70,19 +80,30 @@ class ReportsTable extends Component {
                         </div>
                     );
                 }
-    
+
             }
         ];
     }
-    
+
     render() {
         const reports = this.state.reports;
-        
+        const handleRow = (record, index) => {
+            if (index % 2 === 0) {
+                return {
+                    style: {
+                        background: 'rgb(217, 231, 255, 0.5)',
+                    }
+                };
+            } else {
+                return {};
+            }
+        };
+
         reports.forEach(report => {
             console.log(report.author)
         })
 
-        return <Table className='report-table' columns={this.tableColumns()} dataSource={reports} pagination={{pageSize: 5}} loading={this.state.reports ? false : true} />;
+        return <Table className='report-table' onRow={handleRow} columns={this.tableColumns()} dataSource={reports} pagination={{ pageSize: 5 }} loading={this.state.reports ? false : true} />;
     }
 }
 
