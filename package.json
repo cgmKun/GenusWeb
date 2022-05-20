@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@douyinfe/semi-icons": "^2.10.1",
     "@douyinfe/semi-ui": "^2.8.0",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
