@@ -1,24 +1,63 @@
 import { React, Component } from "react";
-import { Table } from '@douyinfe/semi-ui';
+import { Table, Modal, Button, Space, Tabs} from '@douyinfe/semi-ui';
+import autoBind from "react-autobind";
 //import { IconMore } from '@douyinfe/semi-icons';
 
-//import DeffecTable from './DeffectTable';
+//import DeffecTable from './DeffectTable'; , record.summary, record.description
+
+const getRowKey = record => {
+    return `${record.issueKey}`;
+};
 
 class DefectsOnGroup extends Component {
 
     constructor() {
         super();
-        this.state = { 
+        autoBind(this);
+        this.state = {
             groups: [],
-            visible: false 
+            selectedRowKey: null,
+            infoRow: [],
+            key: '1',
+            visible: false
+
         };
         this.showDialog = this.showDialog.bind(this);
         this.handleOk = this.handleOk.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
+        this.onTabClick = this.onTabClick.bind(this)
+    }
+
+    setRowKey(record) {
+        const selectedRowKey = getRowKey(record);
+        //console.log(record);
+        //console.log(selectedRowKey, typeof selectedRowKey);
+        this.setState({ selectedRowKey: selectedRowKey });
+        //console.log(this.state.selectedRowKey);
+    }
+
+    showDialog() {
+        this.setState({
+            visible: true
+        });
+    }
+    handleOk() {
+        this.setState({
+            visible: false
+        });
+    }
+    handleCancel() {
+        this.setState({
+            visible: false
+        });
     }
 
     componentDidMount() {
         this.fetchReports();
+    }
+
+    onTabClick(key, type) {
+        this.setState({ [type]: key });
     }
 
     fetchReports() {
@@ -26,6 +65,7 @@ class DefectsOnGroup extends Component {
             query: `
                 query {
                     groupsByReportAndSessionId(reportId: "626b1ac49964b7b5a36e9dd1", sessionId: "2"){
+                        groupTitle
                         defects{
                             issueKey summary description
                         }
@@ -48,7 +88,7 @@ class DefectsOnGroup extends Component {
             return res.json();
 
         }).then(resData => {
-            const group = resData.data.groupsByReportAndSessionId[0].defects; //Json ya formateado
+            const group = resData.data.groupsByReportAndSessionId; //Json ya formateado
             console.log(group)
             this.setState({ groups: group });
         }).catch(err => {
@@ -56,21 +96,6 @@ class DefectsOnGroup extends Component {
         });
     }
 
-    showDialog() {
-        this.setState({
-            visible: true
-        });
-    }
-    handleOk() {
-        this.setState({
-            visible: false
-        });
-    }
-    handleCancel() {
-        this.setState({
-            visible: false
-        });
-    }
 
     tableColumns() {
         return [
@@ -94,24 +119,104 @@ class DefectsOnGroup extends Component {
                     );
                 }
 
-            },
-            {
-                title: '',
-                dataIndex: 'description',
-                render: () => {
-                    
-                    return (
-                        <></>
-                    );
-                }
             }
         ];
     }
 
+    
+
     render() {
         const groups = this.state.groups; //
+        const { selectedRowKey } = this.state;
+        const TabList = [];
+        const ContentList = [];
+        let cont = 1; 
 
-        return <Table className='report-table' columns={this.tableColumns()} dataSource={groups} pagination={{ pageSize: 10 }} />;
+        
+
+        groups.forEach(data => {
+            const obj = { tab: data.groupTitle, itemKey: cont.toString()};
+            TabList.push(obj);
+
+            const html = 
+                <div>
+                    <Table
+                        className='report-table'
+                        columns={this.tableColumns()}
+                        dataSource={data.defects}
+                        pagination={{ pageSize: 10 }}
+
+                        rowKey={record => getRowKey(record)}
+                        rowClassName={record =>
+                            getRowKey(record) === selectedRowKey ? "highlighted" : ""
+                        }
+                        onRow={record => {
+                            return {
+                                onClick: () => {
+                                    this.setState({ visible: true, infoRow: record });
+                                    this.setRowKey(record);
+                                }
+                            };
+                        }}
+                    />
+
+                    <Modal
+                        title="Information"
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                        footer={
+                            <Button type="primary" onClick={this.handleOk}>
+                                Cerrar
+                            </Button>
+                        }
+                    >
+                        <div style={{ padding: 12, border: '1px solid var(--semi-color-border)', margin: 12 }}>
+                            <Space vertical align="">
+                                <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Issue </span>
+                                <p
+                                    style={{
+                                        color: 'var(--semi-color-text-2)',
+                                        margin: '4px 0',
+                                        whiteSpace: 'nowrap',
+                                        overflow: 'hidden',
+                                        textOverflow: 'ellipsis',
+                                    }}
+                                >
+                                    {this.state.infoRow.issueKey}
+                                </p>
+                                <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Summary </span>
+                                <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
+                                    {this.state.infoRow.summary}
+                                </p>
+                                <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Description </span>
+                                <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
+                                    {this.state.infoRow.description}
+                                </p>
+                            </Space>
+                        </div>
+                    </Modal>
+                </div>;
+            ContentList.push(html);
+            cont = cont + 1;
+        })
+        console.log(TabList);
+        console.log(groups);
+
+
+        return (
+            <>
+                <Tabs 
+                    type="card"
+                    tabList={TabList}
+                    onChange={key => {
+                        this.onTabClick(key, 'key');
+                    }}
+                >
+                    {ContentList[this.state.key - 1]}
+                </Tabs>
+            </>
+        );
     }
 }
 
