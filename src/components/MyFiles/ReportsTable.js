@@ -73,6 +73,7 @@ class ReportsTable extends Component {
             {
                 title: 'Submit Date',
                 dataIndex: 'submitDate',
+                sorter: (a, b) => a.updateTime - b.updateTime > 0 ? 1 : -1,
                 render: (text) => {
                     return (
                         <div>
