@@ -156,6 +156,10 @@ class DefectsOnGroup extends Component {
                             (record, index) => {
                                 if(index % 2 === 1){
                                     return {
+                                        onClick: () => {
+                                            this.setState({ visible: true, infoRow: record });
+                                            this.setRowKey(record);
+                                        },
                                         style: {
                                             background: 'rgb(217, 231, 255, 0.5)',
                                         }
@@ -223,11 +227,12 @@ class DefectsOnGroup extends Component {
         return (
             <>
                 <Tabs 
-                    type="line"
+                    type="card"
                     tabList={TabList}
                     onChange={key => {
                         this.onTabClick(key, 'key');
                     }}
+                    classname="tabs"
                 >
                     {ContentList[this.state.key - 1]}
                 </Tabs>

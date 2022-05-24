@@ -106,15 +106,17 @@ class ReportsTable extends Component {
             console.log(report.author)
         })
 
-        return <Table className='report-table' 
-            onHeaderRow={() => {
-                return {
-                    className: 'header'
-                };
-            }}
-            onRow={handleRow} columns={this.tableColumns()} 
-            dataSource={reports} pagination={{ pageSize: 5 }} 
-            loading={this.state.reports ? false : true} />;
+        return (
+            <Table className="report-table"
+                onHeaderRow={() => {
+                    return {
+                        className: 'header',
+                    };
+                }}
+                onRow={handleRow} columns={this.tableColumns()}
+                dataSource={reports} pagination={{ pageSize: 5 }}
+                loading={this.state.reports ? false : true} />
+        );
     }
 }
 
