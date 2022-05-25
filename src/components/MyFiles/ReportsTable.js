@@ -62,13 +62,18 @@ class ReportsTable extends Component {
                 dataIndex: 'reportTitle',
                 render: (text) => {
                     return (
-                        <div>{text}</div>
+                        <div className="text-table-body" >{text}</div>
                     );
                 }
             },
             {
                 title: 'Author',
                 dataIndex: 'author',
+                render: (text) => {
+                    return (
+                        <div className="text-table-body" >{text}</div>
+                    );
+                }
             },
             {
                 title: 'Submit Date',
@@ -76,7 +81,7 @@ class ReportsTable extends Component {
                 sorter: (a, b) => a.updateTime - b.updateTime > 0 ? 1 : -1,
                 render: (text) => {
                     return (
-                        <div>
+                        <div className="text-table-body">
                             {text}
                         </div>
                     );
