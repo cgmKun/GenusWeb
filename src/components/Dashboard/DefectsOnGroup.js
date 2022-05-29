@@ -88,7 +88,7 @@ class DefectsOnGroup extends Component {
 
         }).then(resData => {
             const group = resData.data.groupsByReportAndSessionId; //Json ya formateado
-            console.log(group)
+            // console.log(group)
             this.setState({ groups: group });
         }).catch(err => {
             console.log(err);
@@ -217,8 +217,8 @@ class DefectsOnGroup extends Component {
             ContentList.push(html);
             cont = cont + 1;
         })
-        console.log(TabList);
-        console.log(groups);
+        // console.log(TabList);
+        // console.log(groups);
 
 
         return (
