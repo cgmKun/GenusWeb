@@ -4,6 +4,7 @@ import { Modal, Button } from '@douyinfe/semi-ui';
 class ClusterizeReport extends Component {
     constructor() {
         super();
+
         this.state = {visible: false};
         this.showDialog = this.showDialog.bind(this);
         this.handleOk = this.handleOk.bind(this);
@@ -20,14 +21,12 @@ class ClusterizeReport extends Component {
         this.setState({
             visible: false
         });
-        console.log('Ok button clicked');
     }
 
     handleCancel() {
         this.setState({
             visible: false
         });
-        console.log('Cancel button clicked');
     }
 
     render() {

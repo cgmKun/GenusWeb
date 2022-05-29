@@ -17,35 +17,6 @@ class Dashboard extends Component {
         }
     }
 
-    componentDidMount() {
-        this.fetchReports();
-    }
-
-    render () {
-        const { Title } = Typography
-
-        const reports = this.state.reports;
-
-        return(
-            <div className="container">
-                <Row><Title>Seleccione un reporte</Title></Row>
-                <Row>
-                    <Select 
-                        filter 
-                        style={{ width: 240, marginRight: 20 }} 
-                        placeholder={"Select a report"}
-                        showClear={true}
-                        onChange={(value) => {this.setState({ currentReport: value, currentSessionId: null });}}
-                    >
-                        {this.getReportLabels(reports)}
-                    </Select>
-                    {this.getReportGroups()}
-                </Row>
-                {this.getDashboardContent()}
-            </div>
-        )
-    }
-
     fetchReports() {
         const request = fetchReports;
 
@@ -70,6 +41,34 @@ class Dashboard extends Component {
         });
     }
 
+    componentDidMount() {
+        this.fetchReports();
+    }
+
+    render () {
+        const { Title } = Typography
+        const reports = this.state.reports;
+
+        return(
+            <div className="container">
+                <Title className="dashboard-title">Dashboard</Title>
+                <Row className="selectors">
+                    <Select 
+                        filter 
+                        className="report-selector"
+                        placeholder={"Select a report"}
+                        showClear={true}
+                        onChange={(value) => {this.setState({ currentReport: value, currentSessionId: null });}}
+                    >
+                        {this.getReportLabels(reports)}
+                    </Select>
+                    {this.getReportGroups()}
+                </Row>
+                {this.getDashboardContent()}
+            </div>
+        )
+    }
+
     getReportLabels(reports) {
         const labels = [];
 
@@ -90,7 +89,7 @@ class Dashboard extends Component {
         } else {
             return (
                 <Select  
-                    defaultValue={"Select a Group"}
+                    placeholder={"Select a Session ID"}
                     onChange={(value) => {this.setState({ currentSessionId: value });}} 
                 >
                     {this.getReportGroupsLabels(report.sessionIds)}
@@ -119,12 +118,8 @@ class Dashboard extends Component {
         if (report && sessionId) { 
             return (
                 <Row>
-                    <Col md={9}>
-                        <GraphGroup/>
-                    </Col>
-                    <Col md={15}>
-                        <DefectsOnGroup/>
-                    </Col>
+                    <Col md={9}><GraphGroup/></Col>
+                    <Col md={15}><DefectsOnGroup reportId={report._id} sessionId={sessionId}/></Col>
                 </Row>
             );
         }

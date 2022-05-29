@@ -1,21 +1,24 @@
 import { React, Component } from "react";
-import { Table, Modal, Button, Space, Tabs} from '@douyinfe/semi-ui';
-//import autoBind from "react-autobind";
+import PropTypes from 'prop-types'
+import { Table, Tabs} from '@douyinfe/semi-ui';
 
-import "../../styles/Dashboard.scss"
-//import { IconMore } from '@douyinfe/semi-icons';
+import { fetchDefectsByReportAndSessionId } from "../../graphql/fields";
+import InspectDefect from "./DefectsTable/InspectDefect";
 
-//import DeffecTable from './DeffectTable'; , record.summary, record.description
 
 const getRowKey = record => {
     return `${record.issueKey}`;
 };
 
 class DefectsOnGroup extends Component {
+    static propTypes = {
+        reportId: PropTypes.any,
+        sessionId: PropTypes.any
+    }
 
     constructor() {
         super();
-        //autoBind(this);
+
         this.state = {
             groups: [],
             selectedRowKey: null,
@@ -24,8 +27,8 @@ class DefectsOnGroup extends Component {
             visible: false
 
         };
+
         this.showDialog = this.showDialog.bind(this);
-        this.handleOk = this.handleOk.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
         this.onTabClick = this.onTabClick.bind(this)
     }
@@ -35,43 +38,24 @@ class DefectsOnGroup extends Component {
         this.setState({ selectedRowKey: selectedRowKey });
     }
 
+    onTabClick(key, type) {
+        this.setState({ [type]: key });
+    }
+
     showDialog() {
         this.setState({
             visible: true
         });
     }
-    handleOk() {
-        this.setState({
-            visible: false
-        });
-    }
+
     handleCancel() {
         this.setState({
             visible: false
         });
     }
 
-    componentDidMount() {
-        this.fetchReports();
-    }
-
-    onTabClick(key, type) {
-        this.setState({ [type]: key });
-    }
-
-    fetchReports() {
-        const request = {
-            query: `
-                query {
-                    groupsByReportAndSessionId(reportId: "626b1ac49964b7b5a36e9dd1", sessionId: "2"){
-                        groupTitle
-                        defects{
-                            issueKey summary description
-                        }
-                    }
-                }
-            `
-        }
+    getDefectsByReportAndSessionId() {
+        const request = fetchDefectsByReportAndSessionId(this.props.reportId, this.props.sessionId);
 
         fetch('http://localhost:8000/api', {
             method: 'POST',
@@ -87,19 +71,21 @@ class DefectsOnGroup extends Component {
             return res.json();
 
         }).then(resData => {
-            const group = resData.data.groupsByReportAndSessionId; //Json ya formateado
-            // console.log(group)
+            const group = resData.data.groupsByReportAndSessionId;
             this.setState({ groups: group });
         }).catch(err => {
             console.log(err);
         });
     }
 
+    componentDidMount() {
+        this.getDefectsByReportAndSessionId();
+    }
 
     tableColumns() {
         return [
             {
-                title: 'N. Issue',
+                title: 'Issue Key',
                 dataIndex: 'issueKey',
                 render: (text) => {
                     return (
@@ -122,104 +108,45 @@ class DefectsOnGroup extends Component {
         ];
     }
 
-    
-
     render() {
-        const groups = this.state.groups; //
-        const { selectedRowKey } = this.state;
+        const groups = this.state.groups;
         const TabList = [];
         const ContentList = [];
-        let cont = 1; 
+        let itemKey = 1; 
 
-        
+        groups.forEach(group => {
+            const tab = { tab: group.groupTitle, itemKey: itemKey.toString()};
+            TabList.push(tab);
 
-        groups.forEach(data => {
-            const obj = { tab: data.groupTitle, itemKey: cont.toString()};
-            TabList.push(obj);
-
-            const html = 
+            const content = 
                 <div>
                     <Table
-                        className='report-table'
+                        className='defects-table'
                         columns={this.tableColumns()}
-                        dataSource={data.defects}
+                        dataSource={group.defects}
                         pagination={{ pageSize: 10 }}
-
-                        rowKey={record => getRowKey(record)}
-                        rowClassName={record =>
-                            getRowKey(record) === selectedRowKey ? "highlighted" : ""
-                        }
+                        rowKey={group => getRowKey(group)}
                         onRow={
-                            (record, index) => {
-                                if(index % 2 === 1){
-                                    return {
-                                        onClick: () => {
-                                            this.setState({ visible: true, infoRow: record });
-                                            this.setRowKey(record);
-                                        },
-                                        style: {
-                                            background: 'rgb(217, 231, 255, 0.5)',
-                                        }
-                                    }
-                                } 
+                            (group) => {
                                 return {
                                     onClick: () => {
-                                        this.setState({ visible: true, infoRow: record });
-                                        this.setRowKey(record);
+                                        this.setState({ visible: true, infoRow: group });
+                                        this.setRowKey(group);
                                     },
                                 }
                             }
                         }
-                        onHeaderRow={() => {
-                            return {
-                                className: 'header'
-                            };
-                        }}
                     />
-
-                    <Modal
-                        title="Information"
+                    <InspectDefect 
+                        defect={this.state.infoRow}
                         visible={this.state.visible}
-                        onOk={this.handleOk}
-                        onCancel={this.handleCancel}
-                        footer={
-                            <Button type="primary" onClick={this.handleOk}>
-                                Cerrar
-                            </Button>
-                        }
-                    >
-                        <div style={{ padding: 12, border: '1px solid var(--semi-color-border)', margin: 12 }}>
-                            <Space vertical align="">
-                                <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Issue </span>
-                                <p
-                                    style={{
-                                        color: 'var(--semi-color-text-2)',
-                                        margin: '4px 0',
-                                        whiteSpace: 'nowrap',
-                                        overflow: 'hidden',
-                                        textOverflow: 'ellipsis',
-                                    }}
-                                >
-                                    {this.state.infoRow.issueKey}
-                                </p>
-                                <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Summary </span>
-                                <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                                    {this.state.infoRow.summary}
-                                </p>
-                                <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Description </span>
-                                <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                                    {this.state.infoRow.description}
-                                </p>
-                            </Space>
-                        </div>
-                    </Modal>
+                        handleCancel={this.handleCancel}
+                    />
                 </div>
-            ContentList.push(html);
-            cont = cont + 1;
-        })
-        // console.log(TabList);
-        // console.log(groups);
 
+            ContentList.push(content);
+            itemKey += 1;
+        })
 
         return (
             <Tabs 
