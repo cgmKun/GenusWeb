@@ -8,7 +8,7 @@
 // ------------------------------
 // Colors
 // ------------------------------
-
+$cemex-blue-10: rgba(217, 231, 255, 0.8);
 $cemex-blue: #293064;
 $cemex-blue-0: #e6e8f0;
 $cemex-blue-1: #c6cae0;
@@ -23,9 +23,80 @@ $cemex-blue-9: #050612;
 
 $white: #ffffff;
 
+$h: rgb(198, 43, 82);
+$a: rgb(201, 81, 68);
+$f: rgb(166, 8, 214);
+$sa: rgb(140, 85, 224);
+$r: rgb(122, 209, 29);
+$d: rgb(85, 233, 99);
+$t: rgb(239, 179, 67);
+$q: rgb(232, 234, 119);
+$w: rgb(255, 177, 109);
+
+$q: rgb(226, 215, 97);
+$w: rgb(103, 148, 220);
+$e: rgb(163, 103, 220);
+$r: rgb(159, 230, 93);
+$t: rgb(222, 139, 101);
+
 // Body Properties
 * {
     margin: 0;
     padding: 0;
     font-family: 'Roboto';
+}
+
+//@at-root
+
+.semi-table-wrapper {
+    zoom: 1;
+    position: relative;
+    clear: both;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 20px;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: var(--semi-color-text-0);
+    width: 100%;
+    border-radius: 20px;
+}
+
+.semi-table-thead>.semi-table-row>.semi-table-row-head {
+    background-color: transparent;
+    color: rgba(var(--semi-grey-9), 1);
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid var(--semi-color-border);
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    vertical-align: middle;
+    word-break: break-all;
+    word-wrap: break-word;
+    position: relative;
+}
+
+.text-table-body{
+    font-family: 'Roboto';
+    font-weight: 400;
+    color: rgba(var(--semi-grey-7), 1);
+}
+
+.semi-tabs-content {
+    width: 100%;
+    padding: 0px 0;
+    //background: rgb(217, 231, 255, 0.8);
+}
+
+.semi-tabs-bar-card.semi-tabs-bar-top .semi-tabs-tab-active,
+.semi-tabs-bar-card.semi-tabs-bar-top .semi-tabs-tab-active:hover {
+    padding: 8px 12px 7px 12px;
+    border: 1px solid var(--semi-color-border);
+    border-bottom: 1px solid rgb(217, 231, 255, 0.8);
+    background: $cemex-blue-10;
 }

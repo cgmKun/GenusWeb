@@ -1,6 +1,8 @@
 import { React, Component } from "react";
 import { Table, Modal, Button, Space, Tabs} from '@douyinfe/semi-ui';
-import autoBind from "react-autobind";
+//import autoBind from "react-autobind";
+
+import "../../styles/Dashboard.scss"
 //import { IconMore } from '@douyinfe/semi-icons';
 
 //import DeffecTable from './DeffectTable'; , record.summary, record.description
@@ -13,7 +15,7 @@ class DefectsOnGroup extends Component {
 
     constructor() {
         super();
-        autoBind(this);
+        //autoBind(this);
         this.state = {
             groups: [],
             selectedRowKey: null,
@@ -30,10 +32,7 @@ class DefectsOnGroup extends Component {
 
     setRowKey(record) {
         const selectedRowKey = getRowKey(record);
-        //console.log(record);
-        //console.log(selectedRowKey, typeof selectedRowKey);
         this.setState({ selectedRowKey: selectedRowKey });
-        //console.log(this.state.selectedRowKey);
     }
 
     showDialog() {
@@ -150,12 +149,30 @@ class DefectsOnGroup extends Component {
                         rowClassName={record =>
                             getRowKey(record) === selectedRowKey ? "highlighted" : ""
                         }
-                        onRow={record => {
-                            return {
-                                onClick: () => {
-                                    this.setState({ visible: true, infoRow: record });
-                                    this.setRowKey(record);
+                        onRow={
+                            (record, index) => {
+                                if(index % 2 === 1){
+                                    return {
+                                        onClick: () => {
+                                            this.setState({ visible: true, infoRow: record });
+                                            this.setRowKey(record);
+                                        },
+                                        style: {
+                                            background: 'rgb(217, 231, 255, 0.5)',
+                                        }
+                                    }
+                                } 
+                                return {
+                                    onClick: () => {
+                                        this.setState({ visible: true, infoRow: record });
+                                        this.setRowKey(record);
+                                    },
                                 }
+                            }
+                        }
+                        onHeaderRow={() => {
+                            return {
+                                className: 'header'
                             };
                         }}
                     />
@@ -196,7 +213,7 @@ class DefectsOnGroup extends Component {
                             </Space>
                         </div>
                     </Modal>
-                </div>;
+                </div>
             ContentList.push(html);
             cont = cont + 1;
         })
@@ -205,17 +222,16 @@ class DefectsOnGroup extends Component {
 
 
         return (
-            <>
-                <Tabs 
-                    type="card"
-                    tabList={TabList}
-                    onChange={key => {
-                        this.onTabClick(key, 'key');
-                    }}
-                >
-                    {ContentList[this.state.key - 1]}
-                </Tabs>
-            </>
+            <Tabs 
+                type="card"
+                defaultActiveKey="1"
+                tabList={TabList}
+                onChange={key => {
+                    this.onTabClick(key, 'key');
+                }}
+            >
+                {ContentList[this.state.key - 1]}
+            </Tabs>
         );
     }
 }
