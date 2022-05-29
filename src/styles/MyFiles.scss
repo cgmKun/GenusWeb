@@ -17,5 +17,16 @@
         background: rgb(217, 231, 255, 0.8);
     }
 
+    .semi-table-body {
+        overflow: auto;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 20px 20px 0px 0px;
+    }
+
+    .iDelete{
+        color: $cemex-blue-5;
+    }
+
 }
 

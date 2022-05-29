@@ -8,7 +8,7 @@
 // ------------------------------
 // Colors
 // ------------------------------
-
+$cemex-blue-10: rgba(217, 231, 255, 0.8);
 $cemex-blue: #293064;
 $cemex-blue-0: #e6e8f0;
 $cemex-blue-1: #c6cae0;
@@ -63,13 +63,6 @@ $t: rgb(222, 139, 101);
     border-radius: 20px;
 }
 
-.semi-table-body {
-    overflow: auto;
-    width: 100%;
-    box-sizing: border-box;
-    border-radius: 20px 20px 0px 0px;
-}
-
 .semi-table-thead>.semi-table-row>.semi-table-row-head {
     background-color: transparent;
     color: rgba(var(--semi-grey-9), 1);
@@ -97,5 +90,13 @@ $t: rgb(222, 139, 101);
 .semi-tabs-content {
     width: 100%;
     padding: 0px 0;
-    background: rgb(217, 231, 255, 0.8);
+    //background: rgb(217, 231, 255, 0.8);
+}
+
+.semi-tabs-bar-card.semi-tabs-bar-top .semi-tabs-tab-active,
+.semi-tabs-bar-card.semi-tabs-bar-top .semi-tabs-tab-active:hover {
+    padding: 8px 12px 7px 12px;
+    border: 1px solid var(--semi-color-border);
+    border-bottom: 1px solid rgb(217, 231, 255, 0.8);
+    background: $cemex-blue-10;
 }
