@@ -4,7 +4,7 @@ import { Modal, Button, Space } from '@douyinfe/semi-ui';
 
 class InspectDefect extends Component {
     static propTypes = {
-        defect: PropTypes.object,
+        defect: PropTypes.any,
         visible: PropTypes.any,
         handleCancel: PropTypes.any
     }
@@ -19,13 +19,11 @@ class InspectDefect extends Component {
                 onOk={this.props.handleCancel}
                 onCancel={this.props.handleCancel}
                 footer={
-                    <Button type="primary" onClick={this.props.handleCancel}>
-                        Cerrar
-                    </Button>
+                    <Button type="primary" onClick={this.props.handleCancel}>Cerrar</Button>
                 }
             >
                 <div style={{ padding: 12, border: '1px solid var(--semi-color-border)', margin: 12 }}>
-                    <Space vertical align="">
+                    <Space vertical align="start">
                         <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Issue </span>
                         <p
                             style={{

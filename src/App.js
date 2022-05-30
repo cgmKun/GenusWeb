@@ -9,7 +9,6 @@ import Sidebar from './components/Sidebar';
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard'
 import MyFile from './pages/MyFiles';
-import DevActions from './pages/DevActions';
 
 import './styles/App.scss'
 
@@ -35,10 +34,6 @@ function App() {
                             
                                         <Route exact path="/dashboard">
                                             <Dashboard/>
-                                        </Route>
-
-                                        <Route exact path="/dev-actions">
-                                            <DevActions />
                                         </Route>
                                     </Switch>
                                 </div>
