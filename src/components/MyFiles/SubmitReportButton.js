@@ -47,6 +47,7 @@ class SubmitReportButton extends Component {
             visible: true
         });
     }
+    
     handleOk(values) {
         this.setState({
             visible: false

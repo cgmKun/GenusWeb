@@ -1,9 +1,10 @@
 import { React, Component } from "react";
-import { Table, Button, Toast } from '@douyinfe/semi-ui';
-import { IconFolder, IconDelete } from '@douyinfe/semi-icons';
+import { Table, Toast } from '@douyinfe/semi-ui';
+import { IconFolder } from '@douyinfe/semi-icons';
 
 import { fetchReports, deleteReportById } from '../../graphql/fields'
-import ClusterizeReport from "./ClusterizeReport";
+import ClusterizeReport from "../Actions/ClusterizeReport";
+import DeleteReport from "../Actions/DeleteReport";
 
 class ReportsTable extends Component {
     constructor(){
@@ -19,10 +20,6 @@ class ReportsTable extends Component {
 
     render() {
         const reports = this.state.reports;
-
-        reports.forEach(report => {
-            console.log(report.sessionIds)
-        })
 
         return (
             <Table className="report-table"
@@ -82,7 +79,7 @@ class ReportsTable extends Component {
                     return (
                         <>
                             <ClusterizeReport />
-                            <Button icon={<IconDelete className="iDelete" />} theme='borderless' onClick={() => this.deleteReport(report._id)} />
+                            <DeleteReport report={report}/>
                         </>
                     )
                 }
