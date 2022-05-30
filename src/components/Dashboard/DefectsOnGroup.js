@@ -1,8 +1,8 @@
 import { React, Component } from "react";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { Table, Tabs} from '@douyinfe/semi-ui';
 
-import { fetchDefectsByReportAndSessionId } from "../../graphql/fields";
+import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
 import InspectDefect from "./DefectsTable/InspectDefect";
 
 
@@ -54,8 +54,8 @@ class DefectsOnGroup extends Component {
         });
     }
 
-    getDefectsByReportAndSessionId() {
-        const request = fetchDefectsByReportAndSessionId(this.props.reportId, this.props.sessionId);
+    fetchGroupsByReportAndSessionId() {
+        const request = fetchGroupsByReportAndSessionId(this.props.reportId, this.props.sessionId);
 
         fetch('http://localhost:8000/api', {
             method: 'POST',
@@ -79,33 +79,7 @@ class DefectsOnGroup extends Component {
     }
 
     componentDidMount() {
-        this.getDefectsByReportAndSessionId();
-    }
-
-    tableColumns() {
-        return [
-            {
-                title: 'Issue Key',
-                dataIndex: 'issueKey',
-                render: (text) => {
-                    return (
-                        <div>{text}</div>
-                    );
-                }
-            },
-            {
-                title: 'Summary',
-                dataIndex: 'summary',
-                render: (text) => {
-                    return (
-                        <div>
-                            {text}
-                        </div>
-                    );
-                }
-
-            }
-        ];
+        this.fetchGroupsByReportAndSessionId();
     }
 
     render() {
@@ -160,6 +134,32 @@ class DefectsOnGroup extends Component {
                 {ContentList[this.state.key - 1]}
             </Tabs>
         );
+    }
+
+    tableColumns() {
+        return [
+            {
+                title: 'Issue Key',
+                dataIndex: 'issueKey',
+                render: (text) => {
+                    return (
+                        <div>{text}</div>
+                    );
+                }
+            },
+            {
+                title: 'Summary',
+                dataIndex: 'summary',
+                render: (text) => {
+                    return (
+                        <div>
+                            {text}
+                        </div>
+                    );
+                }
+
+            }
+        ];
     }
 }
 

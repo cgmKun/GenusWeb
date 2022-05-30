@@ -50,7 +50,7 @@ class Dashboard extends Component {
         const reports = this.state.reports;
 
         return(
-            <div className="container">
+            <div className="dashboard-content">
                 <Title className="dashboard-title">Dashboard</Title>
                 <Row className="selectors">
                     <Select 
@@ -89,7 +89,8 @@ class Dashboard extends Component {
         } else {
             return (
                 <Select  
-                    placeholder={"Select a Session ID"}
+                    placeholder={report.sessionIds.length === 0 ? "No Sessions Available" : "Select a Session ID"}
+                    disabled={report.sessionIds.length === 0}
                     onChange={(value) => {this.setState({ currentSessionId: value });}} 
                 >
                     {this.getReportGroupsLabels(report.sessionIds)}
@@ -118,7 +119,7 @@ class Dashboard extends Component {
         if (report && sessionId) { 
             return (
                 <Row>
-                    <Col md={9}><GraphGroup/></Col>
+                    <Col md={9}><GraphGroup reportId={report._id} sessionId={sessionId}/></Col>
                     <Col md={15}><DefectsOnGroup reportId={report._id} sessionId={sessionId}/></Col>
                 </Row>
             );

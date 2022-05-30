@@ -32,14 +32,13 @@ export function deleteReportById(reportId) {
 // Groups
 // -----------------------------------------------------------------------------------------------
 
-export function fetchDefectsByReportAndSessionId(reportId, sessionId) {
+export function fetchGroupsByReportAndSessionId(reportId, sessionId) {
     return {
         query: `
             query {
                 groupsByReportAndSessionId(reportId: "${reportId}", sessionId: "${sessionId}"){
                     groupTitle
                     defects{
-                        
                         issueKey 
                         summary 
                         description
