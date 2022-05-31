@@ -13,6 +13,9 @@ export const fetchReports = {
                 author
                 submitDate
                 sessionIds
+                defects {
+                    _id
+                }
             }
         }
     ` 
@@ -37,6 +40,16 @@ export function deleteReportById(reportId) {
                 deleteReport(reportId: "${reportId}") {
                     reportTitle
                 }
+            }
+        `
+    }
+}
+
+export function clusterizeReport(reportId, sessionId, clusters) {
+    return {
+        query: `
+            mutation {
+                classifyReport(reportId:"${reportId}", sessionId:"${sessionId}", clusters:"${clusters}")
             }
         `
     }

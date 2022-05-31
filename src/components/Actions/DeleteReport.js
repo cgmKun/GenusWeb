@@ -86,7 +86,7 @@ class DeleteReport extends Component {
         }).then(resData => {
             if (resData.errors) {
                 Toast.error({
-                    content: 'Submit Reports Error: ' + resData.errors[0].message,
+                    content: 'Delete Reports Error: ' + resData.errors[0].message,
                     duration: 3
                 });
             } else {
