@@ -10,11 +10,16 @@
     }
 
     .report-table {
+        .semi-table-thead {
+            background: rgb(217, 231, 255, 0.8);
+        }
+
+        tr:nth-child(even) {
+            background: rgb(217, 231, 255, 0.4);
+        }
+
         border-radius: 20px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    }
-    .header {
-        background: rgb(217, 231, 255, 0.8);
     }
 
     .semi-table-body {
@@ -27,6 +32,4 @@
     .iDelete{
         color: $cemex-blue-5;
     }
-
 }
-

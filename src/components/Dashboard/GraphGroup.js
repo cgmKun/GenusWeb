@@ -1,32 +1,28 @@
 import { React, Component } from "react";
+import PropTypes from 'prop-types';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+ChartJS.register(ArcElement, Tooltip, Legend);
 import { Doughnut } from 'react-chartjs-2';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
 import '../../styles/Dashboard.scss'
 
-class Graph2 extends Component {
-    state = {
-        groups: []
+class GraphGroup extends Component {
+    static propTypes = {
+        reportId: PropTypes.any,
+        sessionId: PropTypes.any
     }
 
-    componentDidMount() {
-        this.fetchReports();
+    constructor() {
+        super();
+    
+        this.state = {
+            groups: []
+        };
     }
 
-    fetchReports() {
-        const request = {
-            query: `
-            query {
-                groups{
-                    groupTitle
-                    defects{
-                        _id
-                    }
-                }
-            }
-        `
-        }
+    fetchGroupsByReportAndSessionId() {
+        const request = fetchGroupsByReportAndSessionId(this.props.reportId, this.props.sessionId);
 
         fetch('http://localhost:8000/api', {
             method: 'POST',
@@ -42,11 +38,44 @@ class Graph2 extends Component {
             return res.json();
 
         }).then(resData => {
-            const groups = resData.data.groups; //Json ya formateado
-            this.setState({ groups: groups });
+            const group = resData.data.groupsByReportAndSessionId;
+            this.setState({ groups: group });
         }).catch(err => {
             console.log(err);
         });
+    }
+
+    componentDidMount() {
+        this.fetchGroupsByReportAndSessionId();
+    }
+
+    render() {
+        const groups = this.state.groups;
+        const groupsTitle = [];
+        const groupDefectCount = [];
+
+        groups.forEach(group => {
+            groupsTitle.push(group.groupTitle)
+            groupDefectCount.push(group.defects.length)
+        })
+
+        const data = {
+            labels: groupsTitle,
+            datasets: [
+                {
+                    label: '# of Groups',
+                    data: groupDefectCount,
+                    backgroundColor: this.getRandomColors(groupsTitle.length),
+                    hoverOffset: 4
+                }
+            ]
+        }
+
+        return (
+            <div className='chart' >
+                <Doughnut data={data} />
+            </div>
+        );
     }
 
     tableColumns() {
@@ -63,42 +92,20 @@ class Graph2 extends Component {
         ];
     }
 
-    render() {
+    getRandomColors(groupCount) {
+        const backgroundColors = [];
 
-        const groups = this.state.groups; //
-        const labels_aux = [];
-        const data_aux = [];
-        groups.forEach(group => {
-            labels_aux.push(group.groupTitle)
-            data_aux.push(group.defects.length)
-        })
-        const data = {
-            labels: labels_aux,
-            datasets: [
-                {
-                    label: '# of Groups',
-                    data: data_aux,
-                    backgroundColor: [
-                        'rgb(226, 215, 97)',
-                        'rgb(103, 148, 220)',
-                        'rgb(163, 103, 220)',
-                        'rgb(159, 230, 93)',
-                        'rgb(222, 139, 101)',
-                        'rgb(140, 85, 224)',
-                        'rgb(201, 81, 68)'
-                    ],
-                    hoverOffset: 4
-                }
-            ]
-
+        for(let i = 0; i<groupCount; i++) {
+            const randomBetween = (min, max) => min + Math.floor(Math.random() * (max - min + 1));
+            const r = randomBetween(50, 255);
+            const g = randomBetween(50, 255);
+            const b = randomBetween(50, 255);
+            const rgb = `rgb(${r},${g},${b})`;
+            backgroundColors.push(rgb)
         }
 
-        return (
-            <div className='chart' >
-                <Doughnut data={data} />
-            </div>
-        );
+        return backgroundColors;
     }
 }
 
-export default Graph2
+export default GraphGroup;

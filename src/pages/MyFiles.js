@@ -2,8 +2,9 @@ import { React, Component } from "react";
 import { Typography } from '@douyinfe/semi-ui';
 
 import ReportsTable from "../components/MyFiles/ReportsTable";
-import ActionButtons from "../components/MyFiles/ActionButtons";
-import '../styles/MyFiles.scss'
+import SubmitReport from "../components/Actions/SubmitReport";
+
+import '../styles/MyFiles.scss';
 
 class MyFile extends Component {
     render() {
@@ -13,7 +14,7 @@ class MyFile extends Component {
             <div className='my-files-content'>
                 <Title className="my-files-title">My Files</Title>
                 <ReportsTable />
-                <ActionButtons />
+                <SubmitReport />
             </div>
         )
     }
