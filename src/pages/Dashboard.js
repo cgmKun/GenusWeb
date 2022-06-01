@@ -4,6 +4,7 @@ import { Typography, Row, Col, Select } from '@douyinfe/semi-ui';
 import { fetchReports } from '../graphql/fields'
 import DefectsOnGroup from "../components/Dashboard/DefectsOnGroup";
 import GraphGroup from "../components/Dashboard/GraphGroup";
+import GroupsMetadata from "../components/Dashboard/GroupsMetadata";
 
 import "../styles/Dashboard.scss"
 
@@ -118,10 +119,13 @@ class Dashboard extends Component {
 
         if (report && sessionId) { 
             return (
-                <Row>
-                    <Col md={9}><GraphGroup reportId={report._id} sessionId={sessionId}/></Col>
-                    <Col md={15}><DefectsOnGroup reportId={report._id} sessionId={sessionId}/></Col>
-                </Row>
+                <>
+                    <Row><GroupsMetadata reportId={report._id} sessionId={sessionId} /></Row>
+                    <Row>
+                        <Col md={9}><GraphGroup reportId={report._id} sessionId={sessionId}/></Col>
+                        <Col md={15}><DefectsOnGroup reportId={report._id} sessionId={sessionId}/></Col>
+                    </Row>
+                </>
             );
         }
     }

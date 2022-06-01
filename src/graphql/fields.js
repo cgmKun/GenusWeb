@@ -107,11 +107,13 @@ export function fetchGroupsByReportAndSessionId(reportId, sessionId) {
             query {
                 groupsByReportAndSessionId(reportId: "${reportId}", sessionId: "${sessionId}"){
                     groupTitle
+                    submitDate
                     defects{
                         issueKey 
                         summary 
                         description
                     }
+                    keywords
                 }
             }
         `

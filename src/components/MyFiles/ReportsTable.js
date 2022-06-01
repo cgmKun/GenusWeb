@@ -73,6 +73,15 @@ class ReportsTable extends Component {
 
             },
             {
+                title: 'Defect Count',
+                dataIndex: 'defectCount',
+                render: (text, report) =>  {
+                    return (
+                        <>{report.defects.length}</>
+                    )
+                }
+            },
+            {
                 title: 'Actions',
                 dataIndex: 'actions',
                 render: (text, report) => { 
