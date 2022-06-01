@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Space } from '@douyinfe/semi-ui';
+import { Modal, Button } from '@douyinfe/semi-ui';
+
+import "../../../styles/Dashboard.scss"
 
 class InspectDefect extends Component {
     static propTypes = {
@@ -21,30 +23,53 @@ class InspectDefect extends Component {
                 footer={
                     <Button type="primary" onClick={this.props.handleCancel}>Cerrar</Button>
                 }
+                style={{ width: 700 }}
             >
-                <div style={{ padding: 12, border: '1px solid var(--semi-color-border)', margin: 12 }}>
-                    <Space vertical align="start">
-                        <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Issue </span>
-                        <p
-                            style={{
-                                color: 'var(--semi-color-text-2)',
-                                margin: '4px 0',
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                            }}
-                        >
-                            {defect.issueKey}
-                        </p>
-                        <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Summary </span>
-                        <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                            {defect.summary}
-                        </p>
-                        <span style={{ color: 'var(--semi-color-text-0)', fontWeight: 500 }}> Description </span>
-                        <p style={{ color: 'var(--semi-color-text-2)', margin: '4px 0' }}>
-                            {defect.description}
-                        </p>
-                    </Space>
+                <div style={{ padding: 12, border: '1px solid var(--semi-color-border)'}}>
+                    <p className='pModal'>
+                        <span className='tModal'> Issue:   </span>
+                        {defect.issueKey}
+                    </p>
+                    <p className='pModal'>
+                        <span className='tModal'> Status:   </span>
+                        {defect.status}
+                    </p>
+                    <p className='pModal'>
+                        <span className='tModal'> Priority:   </span>
+                        {defect.priority}
+                    </p>
+                    <p className='pModal'>
+                        <span className='tModal'> Severity:   </span>
+                        {defect.severity}
+                    </p>
+                    <p className='pModal'>
+                        <span className='tModal'> Project Key:   </span>
+                        {defect.projectKey}
+                    </p>
+                    <p className='pModal'>
+                        <span className='tModal'> Issue Type:   </span>
+                        {defect.issueType}
+                    </p>
+                    <p className='pModal'>
+                        <span className='tModal'> Created:   </span>
+                        {defect.created}
+                    </p>
+                    <p className='pModal'>
+                        <span className='tModal'> Assignee:   </span>
+                        {defect.assignee}
+                    </p>
+                    <p className='pModal'>
+                        <span className='tModal'> Digital Service:   </span>
+                        {defect.digitalService}
+                    </p>
+                    <span className='tModal'> Summary </span>
+                    <p className='pModal'>
+                        {defect.summary}
+                    </p>
+                    <span className='tModal'> Description </span>
+                    <p className='pModal'>
+                        {defect.description}
+                    </p>
                 </div>
             </Modal>
         )
