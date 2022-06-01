@@ -109,8 +109,16 @@ export function fetchGroupsByReportAndSessionId(reportId, sessionId) {
                     groupTitle
                     submitDate
                     defects{
-                        issueKey 
-                        summary 
+                        issueKey
+                        status
+                        priority
+                        severity
+                        projectKey
+                        issueType
+                        created
+                        assignee
+                        digitalService
+                        summary
                         description
                     }
                     keywords
