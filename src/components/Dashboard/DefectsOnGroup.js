@@ -124,6 +124,7 @@ class DefectsOnGroup extends Component {
 
         return (
             <Tabs 
+                collapsible
                 type="card"
                 defaultActiveKey="1"
                 tabList={TabList}

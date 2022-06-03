@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Row, Col, Select } from '@douyinfe/semi-ui';
+import { Row, Col, Select } from '@douyinfe/semi-ui';
 
 import { fetchReports } from '../graphql/fields'
 import DefectsOnGroup from "../components/Dashboard/DefectsOnGroup";
@@ -47,12 +47,10 @@ class Dashboard extends Component {
     }
 
     render () {
-        const { Title } = Typography
         const reports = this.state.reports;
 
         return(
             <div className="dashboard-content">
-                <Title className="dashboard-title">Dashboard</Title>
                 <Row className="selectors">
                     <Select 
                         filter 
@@ -120,10 +118,15 @@ class Dashboard extends Component {
         if (report && sessionId) { 
             return (
                 <>
-                    <Row><GroupsMetadata reportId={report._id} sessionId={sessionId} /></Row>
                     <Row>
-                        <Col md={9}><GraphGroup reportId={report._id} sessionId={sessionId}/></Col>
-                        <Col md={15}><DefectsOnGroup reportId={report._id} sessionId={sessionId}/></Col>
+                        <Col md={10} >
+                            <GroupsMetadata reportId={report._id} sessionId={sessionId} />
+                            <br />
+                            <GraphGroup reportId={report._id} sessionId={sessionId}/>
+                        </Col>
+                        <Col md={14}>
+                            <DefectsOnGroup reportId={report._id} sessionId={sessionId}/>
+                        </Col>
                     </Row>
                 </>
             );

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Descriptions } from '@douyinfe/semi-ui';
+import {IconAlertTriangle, IconHistogram, IconCalendar} from '@douyinfe/semi-icons';
 
 import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
 
@@ -48,18 +50,75 @@ class GroupsMetadata extends Component {
     render() {
         const groups = this.state.groups;
 
+
         if(!groups) {
             return;
         }
 
         console.log(groups)
 
+        const data = [
+            {
+                key: '',
+                value: (
+                    <span>
+                        <IconHistogram className='iMData' size="extra-large" style={{ color: '#de8b65'}} />
+                    </span>
+                )
+            },
+            { 
+                key: 'Total Groups', 
+                value: (
+                    <span className='tMData'>
+                        {`${groups.length}`}
+                    </span>
+                ) 
+            },
+            {
+                key: '',
+                value: (
+                    <span>
+                        <IconAlertTriangle className='iMData' size="extra-large" style={{ color: '#c62b52' }}/>
+                    </span>
+                )
+            },
+            { 
+                key: 'Total Defects', 
+                value: (
+                    <span className='tMData'>
+                        {`${this.getTotalDefects(groups)}`}
+                    </span>
+                )
+            },
+            {
+                key: '',
+                value: (
+                    <span>
+                        <IconCalendar className='iMData' size="extra-large" style={{ color: '#9fe65d' }} />
+                    </span>
+                )
+            },
+            { 
+                key: 'Creation Date', 
+                value: (
+                    <span className='tMData'>
+                        {`${this.getSubmitDate(groups)}`}
+                    </span>
+                )
+            },
+        ]; 
+
+        const style = {
+            boxShadow: 'var(--semi-shadow-elevated)',
+            backgroundColor: 'var(--semi-color-bg-2)',
+            borderRadius: '4px',
+            padding: '10px',
+            marginRight: '20px',
+        };
+
         return (
             <div>
-                <p>{`Grupos Totales: ${groups.length}`}</p>
-                <p>{`Defectos Totales: ${this.getTotalDefects(groups)}`}</p>
-                <p>{`Fecha de creacion: ${this.getSubmitDate(groups)}`}</p>
-                <div>{this.getGroupsKeywords(groups)}</div>
+                <Descriptions data={data} row size="small" style={style} />
             </div>
         )
     }
