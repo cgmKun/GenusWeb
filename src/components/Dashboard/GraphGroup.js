@@ -1,11 +1,13 @@
 import { React, Component } from "react";
 import PropTypes from 'prop-types';
+import { Card, Switch } from '@douyinfe/semi-ui';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 import { Doughnut } from 'react-chartjs-2';
 
 import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
 import '../../styles/Dashboard.scss'
+
 
 class GraphGroup extends Component {
     static propTypes = {
@@ -17,6 +19,7 @@ class GraphGroup extends Component {
         super();
     
         this.state = {
+            display: false,
             groups: []
         };
     }
@@ -68,12 +71,29 @@ class GraphGroup extends Component {
                     backgroundColor: this.getRandomColors(groupsTitle.length),
                     hoverOffset: 4
                 }
-            ]
+            ],
         }
+
+        const options = {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: this.state.display,
+                    position: 'bottom',
+                },
+            },
+        };
 
         return (
             <div className='chart' >
-                <Doughnut data={data} />
+                <Card
+                    title='Cluster Found'
+                    headerExtraContent={
+                        <Switch onChange={(v) => this.setState({display: v})} ></Switch>
+                    }
+                >
+                    <Doughnut options={options} data={data} />
+                </Card>
             </div>
         );
     }
