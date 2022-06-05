@@ -98,7 +98,7 @@ class DefectsOnGroup extends Component {
                         className='defects-table'
                         columns={this.tableColumns()}
                         dataSource={group.defects}
-                        pagination={{ pageSize: 10 }}
+                        pagination={{ pageSize: 5 }}
                         rowKey={group => getRowKey(group)}
                         onRow={
                             (group) => {

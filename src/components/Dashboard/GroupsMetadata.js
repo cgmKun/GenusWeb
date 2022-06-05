@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Descriptions } from '@douyinfe/semi-ui';
+import { Card, Col } from '@douyinfe/semi-ui';
 import {IconAlertTriangle, IconHistogram, IconCalendar} from '@douyinfe/semi-icons';
 
 import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
@@ -57,7 +57,7 @@ class GroupsMetadata extends Component {
 
         console.log(groups)
 
-        const data = [
+        {/*const data = [
             {
                 key: '',
                 value: (
@@ -113,13 +113,26 @@ class GroupsMetadata extends Component {
             backgroundColor: 'var(--semi-color-bg-2)',
             borderRadius: '4px',
             padding: '10px',
-            marginRight: '20px',
-        };
+        };*/}
 
         return (
-            <div>
-                <Descriptions data={data} row size="small" style={style} />
-            </div>
+            <Card className='cardMData' >
+                <Col className='eleCard' style={{ marginBottom: '20px' }} >
+                    <IconHistogram className='iMData' size="extra-large" style={{ color: '#de8b65' }} />
+                    <div className='titleMData' > Total Groups </div> 
+                    <div className='desMData' > {`${groups.length}`} </div> 
+                </Col>
+                <Col className='eleCard' style={{ marginBottom: '20px' }} >
+                    <IconAlertTriangle className='iMData' size="extra-large" style={{ color: '#c62b52' }} />
+                    <div className='titleMData' > Total Defects </div>
+                    <div className='desMData' > {`${this.getTotalDefects(groups)}`} </div>
+                </Col>
+                <Col className='eleCard' >
+                    <IconCalendar className='iMData' size="extra-large" style={{ color: '#9fe65d' }} />
+                    <div className='titleMData' > Creation Date </div>
+                    <div className='desMData' > {`${this.getSubmitDate(groups)}`} </div>
+                </Col>
+            </Card>
         )
     }
 

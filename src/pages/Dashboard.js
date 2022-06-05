@@ -52,16 +52,16 @@ class Dashboard extends Component {
         return(
             <div className="dashboard-content">
                 <Row className="selectors">
-                    <Select 
-                        filter 
+                    <Select
+                        filter
                         className="report-selector"
                         placeholder={"Select a report"}
                         showClear={true}
-                        onChange={(value) => {this.setState({ currentReport: value, currentSessionId: null });}}
+                        onChange={(value) => { this.setState({ currentReport: value, currentSessionId: null }); }}
                     >
                         {this.getReportLabels(reports)}
                     </Select>
-                    {this.getReportGroups()}
+                    {this.getReportGroups()} 
                 </Row>
                 {this.getDashboardContent()}
             </div>
@@ -119,12 +119,13 @@ class Dashboard extends Component {
             return (
                 <>
                     <Row>
-                        <Col md={10} >
+                        <Col md={2} style={{ paddingRight: '10px' }} >
                             <GroupsMetadata reportId={report._id} sessionId={sessionId} />
-                            <br />
+                        </Col>
+                        <Col md={10} style={{ paddingRight: '10px'}}>
                             <GraphGroup reportId={report._id} sessionId={sessionId}/>
                         </Col>
-                        <Col md={14}>
+                        <Col md={12}>
                             <DefectsOnGroup reportId={report._id} sessionId={sessionId}/>
                         </Col>
                     </Row>
