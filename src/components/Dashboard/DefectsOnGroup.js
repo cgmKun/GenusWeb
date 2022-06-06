@@ -73,6 +73,7 @@ class DefectsOnGroup extends Component {
         }).then(resData => {
             const group = resData.data.groupsByReportAndSessionId;
             this.setState({ groups: group });
+            console.log(group);
         }).catch(err => {
             console.log(err);
         });
@@ -86,39 +87,56 @@ class DefectsOnGroup extends Component {
         const groups = this.state.groups;
         const TabList = [];
         const ContentList = [];
+        let KeywordsList = [];
         let itemKey = 1; 
 
         groups.forEach(group => {
             const tab = { tab: group.groupTitle, itemKey: itemKey.toString()};
             TabList.push(tab);
 
+            group.keywords.forEach(keyword =>{
+                const item = {keyword: keyword};
+                KeywordsList.push(item);
+            })
+
             const content = 
                 <div>
-                    <Table
-                        className='defects-table'
-                        columns={this.tableColumns()}
-                        dataSource={group.defects}
-                        pagination={{ pageSize: 5 }}
-                        rowKey={group => getRowKey(group)}
-                        onRow={
-                            (group) => {
-                                return {
-                                    onClick: () => {
-                                        this.setState({ visible: true, infoRow: group });
-                                        this.setRowKey(group);
-                                    },
+                    <div>
+                        <Table
+                            className='defects-table'
+                            columns={this.tableColumnsDefects()}
+                            dataSource={group.defects}
+                            pagination={{ pageSize: 5 }}
+                            rowKey={group => getRowKey(group)}
+                            onRow={
+                                (group) => {
+                                    return {
+                                        onClick: () => {
+                                            this.setState({ visible: true, infoRow: group });
+                                            this.setRowKey(group);
+                                        },
+                                    }
                                 }
                             }
-                        }
-                    />
-                    <InspectDefect 
-                        defect={this.state.infoRow}
-                        visible={this.state.visible}
-                        handleCancel={this.handleCancel}
-                    />
+                        />
+                        <InspectDefect 
+                            defect={this.state.infoRow}
+                            visible={this.state.visible}
+                            handleCancel={this.handleCancel}
+                        />
+                    </div>
+                    <div>
+                        <Table
+                            className='defects-table'
+                            columns={this.tableColumnsKeywords()}
+                            dataSource={KeywordsList}
+                            pagination={{ pageSize: 5 }}
+                        />
+                    </div>
                 </div>
 
             ContentList.push(content);
+            KeywordsList = [];
             itemKey += 1;
         })
 
@@ -137,7 +155,7 @@ class DefectsOnGroup extends Component {
         );
     }
 
-    tableColumns() {
+    tableColumnsDefects() {
         return [
             {
                 title: 'Issue Key',
@@ -160,6 +178,20 @@ class DefectsOnGroup extends Component {
                 }
 
             }
+        ];
+    }
+
+    tableColumnsKeywords() {
+        return [
+            {
+                title: 'Keywords',
+                dataIndex: 'keyword',
+                render: (text) => {
+                    return (
+                        <div>{text}</div>
+                    );
+                }
+            },
         ];
     }
 }

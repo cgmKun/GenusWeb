@@ -57,64 +57,6 @@ class GroupsMetadata extends Component {
 
         console.log(groups)
 
-        {/*const data = [
-            {
-                key: '',
-                value: (
-                    <span>
-                        <IconHistogram className='iMData' size="extra-large" style={{ color: '#de8b65'}} />
-                    </span>
-                )
-            },
-            { 
-                key: 'Total Groups', 
-                value: (
-                    <span className='tMData'>
-                        {`${groups.length}`}
-                    </span>
-                ) 
-            },
-            {
-                key: '',
-                value: (
-                    <span>
-                        <IconAlertTriangle className='iMData' size="extra-large" style={{ color: '#c62b52' }}/>
-                    </span>
-                )
-            },
-            { 
-                key: 'Total Defects', 
-                value: (
-                    <span className='tMData'>
-                        {`${this.getTotalDefects(groups)}`}
-                    </span>
-                )
-            },
-            {
-                key: '',
-                value: (
-                    <span>
-                        <IconCalendar className='iMData' size="extra-large" style={{ color: '#9fe65d' }} />
-                    </span>
-                )
-            },
-            { 
-                key: 'Creation Date', 
-                value: (
-                    <span className='tMData'>
-                        {`${this.getSubmitDate(groups)}`}
-                    </span>
-                )
-            },
-        ]; 
-
-        const style = {
-            boxShadow: 'var(--semi-shadow-elevated)',
-            backgroundColor: 'var(--semi-color-bg-2)',
-            borderRadius: '4px',
-            padding: '10px',
-        };*/}
-
         return (
             <Card className='cardMData' >
                 <Col className='eleCard' style={{ marginBottom: '20px' }} >
