@@ -127,3 +127,20 @@ export function fetchGroupsByReportAndSessionId(reportId, sessionId) {
         `
     }
 }
+
+// -----------------------------------------------------------------------------------------------
+// Keywords and Groups
+// -----------------------------------------------------------------------------------------------
+
+export function fetchKeywordsByReportAndSessionId(reportId, sessionId) {
+    return {
+        query: `
+            query {
+                groupsByReportAndSessionId(reportId: "${reportId}", sessionId: "${sessionId}"){
+                    groupTitle
+                    keywords
+                }
+            }
+        `
+    }
+}

@@ -22,6 +22,7 @@ $cemex-blue-8: #0c0e27;
 $cemex-blue-9: #050612;
 
 $white: #ffffff;
+$gris: rgba(147, 147, 147, 0);
 
 $h: #c62b52;
 $a: rgb(201, 81, 68);
@@ -44,6 +45,10 @@ $cemex-orange: #de8b65;
     margin: 0;
     padding: 0;
     font-family: 'Roboto';
+}
+
+.content-wrapper{
+    //overflow: scroll;
 }
 
 //@at-root
