@@ -1,10 +1,11 @@
 import React, { Component } from "react";
-import { Row, Col, Select } from '@douyinfe/semi-ui';
+import { Row, Select } from '@douyinfe/semi-ui';
 
 import { fetchReports } from '../graphql/fields'
-import DefectsOnGroup from "../components/Dashboard/DefectsOnGroup";
-import GraphGroup from "../components/Dashboard/GraphGroup";
-import GroupsMetadata from "../components/Dashboard/GroupsMetadata";
+import DashboardContent from "../components/Dashboard/DashboardContent";
+// import DefectsOnGroup from "../components/Dashboard/DefectsOnGroup";
+// import GraphGroup from "../components/Dashboard/GraphGroup";
+// import GroupsMetadata from "../components/Dashboard/GroupsMetadata";
 
 import "../styles/Dashboard.scss"
 
@@ -13,9 +14,14 @@ class Dashboard extends Component {
         super();
         this.state = {
             reports: [],
+            isLoading: true,
             currentReport: null,
             currentSessionId: null
         }
+    }
+
+    componentDidMount() {
+        this.fetchReports();
     }
 
     fetchReports() {
@@ -36,14 +42,10 @@ class Dashboard extends Component {
 
         }).then(resData => {
             const reports = resData.data.reports;
-            this.setState({ reports: reports });
+            this.setState({ reports: reports, isLoading: false });
         }).catch(err => {
             console.log(err);
         });
-    }
-
-    componentDidMount() {
-        this.fetchReports();
     }
 
     render () {
@@ -58,6 +60,7 @@ class Dashboard extends Component {
                         placeholder={"Select a report"}
                         showClear={true}
                         onChange={(value) => { this.setState({ currentReport: value, currentSessionId: null }); }}
+                        loading={this.state.isLoading}
                     >
                         {this.getReportLabels(reports)}
                     </Select>
@@ -117,19 +120,7 @@ class Dashboard extends Component {
 
         if (report && sessionId) { 
             return (
-                <>
-                    <Row>
-                        <Col md={2} style={{ paddingRight: '10px' }} >
-                            <GroupsMetadata reportId={report._id} sessionId={sessionId} />
-                        </Col>
-                        <Col md={10} style={{ paddingRight: '10px'}}>
-                            <GraphGroup reportId={report._id} sessionId={sessionId}/>
-                        </Col>
-                        <Col md={12}>
-                            <DefectsOnGroup reportId={report._id} sessionId={sessionId}/>
-                        </Col>
-                    </Row>
-                </>
+                <DashboardContent reportId={report._id} sessionId={sessionId}/>
             );
         }
     }

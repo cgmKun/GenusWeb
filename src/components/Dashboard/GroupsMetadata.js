@@ -3,59 +3,17 @@ import PropTypes from 'prop-types';
 import { Card, Col } from '@douyinfe/semi-ui';
 import {IconAlertTriangle, IconHistogram, IconCalendar} from '@douyinfe/semi-icons';
 
-import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
-
 class GroupsMetadata extends Component {
     static propTypes = {
-        reportId: PropTypes.any,
-        sessionId: PropTypes.any
-    }
-
-    constructor() {
-        super();
-    
-        this.state = {
-            groups: []
-        };
-    }
-
-    fetchGroupsByReportAndSessionId() {
-        const request = fetchGroupsByReportAndSessionId(this.props.reportId, this.props.sessionId);
-
-        fetch('http://localhost:8000/api', {
-            method: 'POST',
-            body: JSON.stringify(request),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-                throw new Error('Falied POST');
-            }
-
-            return res.json();
-
-        }).then(resData => {
-            const group = resData.data.groupsByReportAndSessionId;
-            this.setState({ groups: group });
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-
-    componentDidMount() {
-        this.fetchGroupsByReportAndSessionId();
+        groups: PropTypes.any
     }
 
     render() {
-        const groups = this.state.groups;
-
+        const groups = this.props.groups;
 
         if(!groups) {
             return;
         }
-
-        console.log(groups)
 
         return (
             <Card className='cardMData' >
