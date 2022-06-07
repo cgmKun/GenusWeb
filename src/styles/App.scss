@@ -3,11 +3,7 @@
 // TODO: Test if corneder margins are suitable for the section
 // TODO: Test if content classname should be on Semi Ui Components
 
-.content-margin {
-    height: 100%;
-    width: 100%;
-
-    .content-wrapper {
-        
-    }
+.app-content {
+    height: calc(100vh - 70px);
+    overflow: auto;
 }
