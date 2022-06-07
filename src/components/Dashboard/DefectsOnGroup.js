@@ -2,7 +2,6 @@ import { React, Component } from "react";
 import PropTypes from 'prop-types';
 import { Table, Tabs} from '@douyinfe/semi-ui';
 
-import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
 import InspectDefect from "./DefectsTable/InspectDefect";
 
 
@@ -12,15 +11,13 @@ const getRowKey = record => {
 
 class DefectsOnGroup extends Component {
     static propTypes = {
-        reportId: PropTypes.any,
-        sessionId: PropTypes.any
+        groups: PropTypes.any
     }
 
     constructor() {
         super();
 
         this.state = {
-            groups: [],
             selectedRowKey: null,
             infoRow: [],
             key: '1',
@@ -54,37 +51,8 @@ class DefectsOnGroup extends Component {
         });
     }
 
-    fetchGroupsByReportAndSessionId() {
-        const request = fetchGroupsByReportAndSessionId(this.props.reportId, this.props.sessionId);
-
-        fetch('http://localhost:8000/api', {
-            method: 'POST',
-            body: JSON.stringify(request),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-                throw new Error('Falied POST');
-            }
-
-            return res.json();
-
-        }).then(resData => {
-            const group = resData.data.groupsByReportAndSessionId;
-            this.setState({ groups: group });
-            console.log(group);
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-
-    componentDidMount() {
-        this.fetchGroupsByReportAndSessionId();
-    }
-
     render() {
-        const groups = this.state.groups;
+        const groups = this.props.groups;
         const TabList = [];
         const ContentList = [];
         let KeywordsList = [];

@@ -10,7 +10,8 @@ class ReportsTable extends Component {
     constructor(){
         super();
         this.state = {
-            reports: []
+            reports: [],
+            isLoading: true
         }
     }
 
@@ -26,7 +27,7 @@ class ReportsTable extends Component {
                 columns={this.tableColumns()}
                 dataSource={reports} 
                 pagination={{ pageSize: 5 }}
-                loading={this.state.reports ? false : true} />
+                loading={this.state.isLoading} />
         );
     }
 
@@ -114,7 +115,7 @@ class ReportsTable extends Component {
 
         }).then(resData => {
             const reports = resData.data.reports;
-            this.setState({ reports: reports });
+            this.setState({ reports: reports, isLoading: false });
         }).catch(err => {
             console.log(err);
         });

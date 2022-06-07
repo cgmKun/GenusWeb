@@ -5,14 +5,12 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 import { Doughnut } from 'react-chartjs-2';
 
-import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
 import '../../styles/Dashboard.scss'
 
 
 class GraphGroup extends Component {
     static propTypes = {
-        reportId: PropTypes.any,
-        sessionId: PropTypes.any
+        groups: PropTypes.any
     }
 
     constructor() {
@@ -20,40 +18,11 @@ class GraphGroup extends Component {
     
         this.state = {
             display: false,
-            groups: []
         };
     }
 
-    fetchGroupsByReportAndSessionId() {
-        const request = fetchGroupsByReportAndSessionId(this.props.reportId, this.props.sessionId);
-
-        fetch('http://localhost:8000/api', {
-            method: 'POST',
-            body: JSON.stringify(request),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => {
-            if (res.status !== 200 && res.status !== 201) {
-                throw new Error('Falied POST');
-            }
-
-            return res.json();
-
-        }).then(resData => {
-            const group = resData.data.groupsByReportAndSessionId;
-            this.setState({ groups: group });
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-
-    componentDidMount() {
-        this.fetchGroupsByReportAndSessionId();
-    }
-
     render() {
-        const groups = this.state.groups;
+        const groups = this.props.groups;
         const groupsTitle = [];
         const groupDefectCount = [];
 
