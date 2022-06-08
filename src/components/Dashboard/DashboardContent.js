@@ -6,6 +6,7 @@ import { fetchGroupsByReportAndSessionId } from "../../graphql/fields";
 import DefectsOnGroup from "../Dashboard/DefectsOnGroup";
 import GraphGroup from "../Dashboard/GraphGroup"
 import GroupsMetadata from "../Dashboard/GroupsMetadata";
+import DownloadReport from './DownloadReport';
 
 class DashboardContent extends Component {
     static propTypes = {
@@ -63,6 +64,7 @@ class DashboardContent extends Component {
 
         return (
             <>
+                <Row><DownloadReport groups={groups}></DownloadReport></Row>
                 <Row>
                     <Col md={2} style={{ paddingRight: '10px' }} >
                         <GroupsMetadata groups={groups} />
