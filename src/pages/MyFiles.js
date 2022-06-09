@@ -1,5 +1,5 @@
 import { React, Component } from "react";
-import { Typography } from '@douyinfe/semi-ui';
+import { Typography, Row, Col } from '@douyinfe/semi-ui';
 
 import ReportsTable from "../components/MyFiles/ReportsTable";
 import SubmitReport from "../components/Actions/SubmitReport";
@@ -12,9 +12,11 @@ class MyFile extends Component {
 
         return (
             <div className='my-files-content'>
-                <Title className="my-files-title">My Files</Title>
+                <Row>
+                    <Col md={22} > <Title className="my-files-title">My Files</Title> </Col>
+                    <Col md={2} > <SubmitReport /> </Col>
+                </Row>
                 <ReportsTable />
-                <SubmitReport />
             </div>
         )
     }

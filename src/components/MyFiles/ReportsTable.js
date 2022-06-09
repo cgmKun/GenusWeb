@@ -27,7 +27,8 @@ class ReportsTable extends Component {
                 columns={this.tableColumns()}
                 dataSource={reports} 
                 pagination={{ pageSize: 5 }}
-                loading={this.state.isLoading} />
+                loading={this.state.isLoading}
+            />
         );
     }
 
@@ -63,7 +64,7 @@ class ReportsTable extends Component {
             {
                 title: 'Submit Date',
                 dataIndex: 'submitDate',
-                sorter: (a, b) => a.updateTime - b.updateTime > 0 ? 1 : -1,
+                sorter: (a, b) => a.submitDate - b.submitDate > 0 ? 1 : -1,
                 render: (text) => {
                     return (
                         <div className="text-table-body">
@@ -78,19 +79,29 @@ class ReportsTable extends Component {
                 dataIndex: 'defectCount',
                 render: (text, report) =>  {
                     return (
-                        <>{report.defects.length}</>
+                        <div>{report.defects.length}</div>
                     )
                 }
             },
             {
-                title: 'Actions',
-                dataIndex: 'actions',
+                title: '',
+                dataIndex: 'clusterized',
                 render: (text, report) => { 
                     return (
-                        <>
+                        <div>
                             <ClusterizeReport report={report}/>
-                            <DeleteReport report={report}/>
-                        </>
+                        </div>
+                    )
+                }
+            },
+            {
+                title: '',
+                dataIndex: 'actions',
+                render: (text, report) => {
+                    return (
+                        <div>
+                            <DeleteReport report={report} />
+                        </div>
                     )
                 }
             }

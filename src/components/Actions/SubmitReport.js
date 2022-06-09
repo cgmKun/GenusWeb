@@ -99,7 +99,7 @@ class SubmitReport extends Component {
 
         return(
             <div>
-                <Button onClick={() => this.showDialog()}>UPLOAD FILE</Button>
+                <Button className="submit-button" onClick={() => this.showDialog()}>UPLOAD FILE</Button>
                 <Modal
                     title="Submit New Report"
                     visible={this.state.visible}

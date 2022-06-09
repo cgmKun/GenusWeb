@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button, Slider, InputNumber, Toast } from '@douyinfe/semi-ui';
+import { Modal, Slider, InputNumber, Toast, Popover } from '@douyinfe/semi-ui';
+import { IconPlay } from '@douyinfe/semi-icons';
 import { clusterizeReport } from '../../graphql/fields';
 
 class ClusterizeReport extends Component {
@@ -60,20 +61,28 @@ class ClusterizeReport extends Component {
 
         return (
             <>
-                <Button onClick={this.showDialog}>Clusterize Report</Button>
-                <Modal
-                    title="Clusterize Report"
-                    visible={this.state.visible}
-                    onOk={() => this.handleOk(report)}
-                    onCancel={this.handleCancel}
+                <Popover showArrow
+                    content={
+                        <article style={{ padding: 6 }}>
+                            Clusterize Report
+                        </article>
+                    }
                 >
-                    <p>{`The report "${report.reportTitle}" defects will be clusterized using the K-means algorithm. Please select the number of clusters desired`}</p>
-                    <div style={{ width: 320, marginRight: 15, marginTop: 15 }}>
-                        <p>The maximum number of clusters is 50</p>
-                        <Slider step={1} value={sliderValue} onChange={(sliderValue) => (this.getSliderValue(sliderValue))} min={1} max={report.defects.length > 50 ? 50 : report.defects.length} ></Slider>
-                        <InputNumber onChange={(v) => this.getSliderValue(v)} style={{width: 100}} value={sliderValue} min={1} max={report.defects.length > 50 ? 50 : report.defects.length} />
-                    </div>
-                </Modal>
+                    <IconPlay style={{ color: 'rgb(85, 233, 99)' }} onClick={this.showDialog} />
+                    <Modal
+                        title="Clusterize Report"
+                        visible={this.state.visible}
+                        onOk={() => this.handleOk(report)}
+                        onCancel={this.handleCancel}
+                    >
+                        <p>{`The report "${report.reportTitle}" defects will be clusterized using the K-means algorithm. Please select the number of clusters desired`}</p>
+                        <div style={{ width: 320, marginRight: 15, marginTop: 15 }}>
+                            <p>The maximum number of clusters is 50</p>
+                            <Slider step={1} value={sliderValue} onChange={(sliderValue) => (this.getSliderValue(sliderValue))} min={1} max={report.defects.length > 50 ? 50 : report.defects.length} ></Slider>
+                            <InputNumber onChange={(v) => this.getSliderValue(v)} style={{ width: 100 }} value={sliderValue} min={1} max={report.defects.length > 50 ? 50 : report.defects.length} />
+                        </div>
+                    </Modal>
+                </Popover>
             </>
         );
     }
