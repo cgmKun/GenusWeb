@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Card, Col } from '@douyinfe/semi-ui';
+import { Card, Col, Row } from '@douyinfe/semi-ui';
 import {IconAlertTriangle, IconHistogram, IconCalendar} from '@douyinfe/semi-icons';
 
 class GroupsMetadata extends Component {
@@ -10,29 +10,49 @@ class GroupsMetadata extends Component {
 
     render() {
         const groups = this.props.groups;
+        const { Meta } = Card;
 
         if(!groups) {
             return;
         }
 
         return (
-            <Card className='cardMData' >
-                <Col className='eleCard' style={{ marginBottom: '20px' }} >
-                    <IconHistogram className='iMData' size="extra-large" style={{ color: '#de8b65' }} />
-                    <div className='titleMData' > Total Groups </div> 
-                    <div className='desMData' > {`${groups.length}`} </div> 
+            <Row className='cards-container' gutter={32} >
+                <Col span={8} >
+                    <Card>
+                        <Meta
+                            title={<p className='tCardMData'> Total Groups </p>}
+                            description={<p className='dCardMData'> {`${groups.length}`} </p>}
+                            avatar={
+                                <IconHistogram className='iMData' size="extra-large" style={{ color: '#de8b65', fontSize: '35px' }} />
+                            }
+                        />
+                    </Card>
                 </Col>
-                <Col className='eleCard' style={{ marginBottom: '20px' }} >
-                    <IconAlertTriangle className='iMData' size="extra-large" style={{ color: '#c62b52' }} />
-                    <div className='titleMData' > Total Defects </div>
-                    <div className='desMData' > {`${this.getTotalDefects(groups)}`} </div>
-                </Col>
-                <Col className='eleCard' >
-                    <IconCalendar className='iMData' size="extra-large" style={{ color: '#9fe65d' }} />
-                    <div className='titleMData' > Creation Date </div>
-                    <div className='desMData' > {`${this.getSubmitDate(groups)}`} </div>
-                </Col>
-            </Card>
+                <Col span={8}>
+                    <Card>
+                        <Meta
+                            title={<p className='tCardMData'> Total Defects </p>}
+                            description={<p className='dCardMData'> {`${this.getTotalDefects(groups)}`} </p>}
+                            avatar={
+                                <IconAlertTriangle className='iMData' size="extra-large" style={{ color: '#c62b52', fontSize: '35px' }} />
+                            }
+                        />
+                    </Card>
+                </Col> 
+                <Col span={8}>
+                    <Card>
+                        <Meta
+                            title={<p className='tCardMData'> Creation Date </p>}
+                            description={<p className='dCardMData'> {`${this.getSubmitDate(groups)}`} </p>}
+                            avatar={
+                                <IconCalendar className='iMData' size="extra-large" style={{ color: '#9fe65d', fontSize: '35px' }} />
+                            }
+                        />
+                    </Card>
+                </Col>    
+            </Row>
+
         )
     }
 
