@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Select } from '@douyinfe/semi-ui';
+import { Row, Select, Typography, Col } from '@douyinfe/semi-ui';
 
 import { fetchReports } from '../graphql/fields'
 import DashboardContent from "../components/Dashboard/DashboardContent";
@@ -50,21 +50,27 @@ class Dashboard extends Component {
 
     render () {
         const reports = this.state.reports;
+        const { Title } = Typography;
 
         return(
             <div className="dashboard-content">
                 <Row className="selectors">
-                    <Select
-                        filter
-                        className="report-selector"
-                        placeholder={"Select a report"}
-                        showClear={true}
-                        onChange={(value) => { this.setState({ currentReport: value, currentSessionId: null }); }}
-                        loading={this.state.isLoading}
-                    >
-                        {this.getReportLabels(reports)}
-                    </Select>
-                    {this.getReportGroups()} 
+                    <Col md={12}>
+                        <Title className="dashboard-title">Dashboard</Title>
+                    </Col>
+                    <Col md={12}>
+                        <Select
+                            filter
+                            className="report-selector"
+                            placeholder={"Select a report"}
+                            showClear={true}
+                            onChange={(value) => { this.setState({ currentReport: value, currentSessionId: null }); }}
+                            loading={this.state.isLoading}
+                        >
+                            {this.getReportLabels(reports)}
+                        </Select>
+                        {this.getReportGroups()} 
+                    </Col>
                 </Row>
                 {this.getDashboardContent()}
             </div>

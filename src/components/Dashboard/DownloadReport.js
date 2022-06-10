@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { CSVLink } from 'react-csv';
+import { Button } from '@douyinfe/semi-ui';
+
+import "../../styles/Dashboard.scss"
 
 class DownloadReport extends Component {
     static propTypes = {
@@ -17,7 +20,7 @@ class DownloadReport extends Component {
         const formattedData = this.getFormattedData()
 
         return (
-            <CSVLink {...formattedData}>Export To CSV</CSVLink>
+            <Button className='download-button'> <CSVLink {...formattedData}>Export To CSV</CSVLink> </Button>
         );
     }
     

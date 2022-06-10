@@ -1,8 +1,9 @@
 import { React, Component } from "react";
 import PropTypes from 'prop-types';
-import { Table, Tabs} from '@douyinfe/semi-ui';
+import { Table, Tabs, Collapse } from '@douyinfe/semi-ui';
 
 import InspectDefect from "./DefectsTable/InspectDefect";
+import DownloadReport from './DownloadReport';
 
 
 const getRowKey = record => {
@@ -69,38 +70,41 @@ class DefectsOnGroup extends Component {
 
             const content = 
                 <div>
-                    <div>
-                        <Table
-                            className='defects-table'
-                            columns={this.tableColumnsDefects()}
-                            dataSource={group.defects}
-                            pagination={{ pageSize: 5 }}
-                            rowKey={group => getRowKey(group)}
-                            onRow={
-                                (group) => {
-                                    return {
-                                        onClick: () => {
-                                            this.setState({ visible: true, infoRow: group });
-                                            this.setRowKey(group);
-                                        },
+                    <Collapse>
+                        <Collapse.Panel header="Defects" itemKey="1" extra={group.defects.length} >
+                            <Table
+                                className='defects-table'
+                                columns={this.tableColumnsDefects()}
+                                dataSource={group.defects}
+                                pagination={{ pageSize: 6 }}
+                                rowKey={group => getRowKey(group)}
+                                onRow={
+                                    (group) => {
+                                        return {
+                                            onClick: () => {
+                                                this.setState({ visible: true, infoRow: group });
+                                                this.setRowKey(group);
+                                            },
+                                        }
                                     }
                                 }
-                            }
-                        />
-                        <InspectDefect 
-                            defect={this.state.infoRow}
-                            visible={this.state.visible}
-                            handleCancel={this.handleCancel}
-                        />
-                    </div>
-                    <div>
-                        <Table
-                            className='defects-table'
-                            columns={this.tableColumnsKeywords()}
-                            dataSource={KeywordsList}
-                            pagination={{ pageSize: 5 }}
-                        />
-                    </div>
+                            />
+                            <InspectDefect
+                                defect={this.state.infoRow}
+                                visible={this.state.visible}
+                                handleCancel={this.handleCancel}
+                            />
+                        </Collapse.Panel>
+                        <Collapse.Panel header="Extra information" itemKey="2" >
+                            <Table
+                                className='defects-table'
+                                columns={this.tableColumnsKeywords()}
+                                dataSource={KeywordsList}
+                                pagination={{ pageSize: 6 }}
+                            />
+                        </Collapse.Panel>
+                    </Collapse>
+                    <DownloadReport groups={groups}></DownloadReport>
                 </div>
 
             ContentList.push(content);
