@@ -23,17 +23,19 @@ function App() {
                     <Header><Navbar /></Header>
                     <Layout>
                         <Sider><Sidebar /></Sider>
-                        <Content className='app-content'>                    
-                            <Switch>
-                                <Redirect from="/" to="/myfiles" exact />
-                                <Route exact path="/myfiles">
-                                    <MyFile />
-                                </Route>
-                    
-                                <Route exact path="/dashboard">
-                                    <Dashboard/>
-                                </Route>
-                            </Switch>
+                        <Content className='app-content'> 
+                            <div className='border-content' >
+                                <Switch>
+                                    <Redirect from="/" to="/myfiles" exact />
+                                    <Route exact path="/myfiles">
+                                        <MyFile />
+                                    </Route>
+
+                                    <Route exact path="/dashboard">
+                                        <Dashboard />
+                                    </Route>
+                                </Switch>
+                            </div>                   
                         </Content>
                     </Layout>
                 </Layout>

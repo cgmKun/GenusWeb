@@ -4,6 +4,12 @@
 // TODO: Test if content classname should be on Semi Ui Components
 
 .app-content {
+    background-color: $cemex-blue ;
+}
+
+.border-content{
+    background-color: white;
+    border-radius: 20px 0px 0px 0px;
     height: calc(100vh - 70px);
     overflow: auto;
 }
