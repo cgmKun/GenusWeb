@@ -28,8 +28,9 @@ class DownloadReport extends Component {
         const groups = this.props.groups;
         const formattedData = [];
         const headers = [
-            { label: "Defect", key: "defect" },
+            { label: "Issue Key", key: "issueKey" },
             { label: "Status", key: "status" },
+            { label: "Priority", key: "priority" },
             { label: "Severity", key: "severity" },
             { label: "Project Key", key: "projectKey" },
             { label: "Issue Type", key: "issueType" },
@@ -57,6 +58,47 @@ class DownloadReport extends Component {
                         summary: defect.summary,
                         description: defect.description,
                         group: group.groupTitle
+                    }
+                )
+            })
+        })
+
+        groups.forEach((group) => {
+
+            formattedData.push(
+                {
+                    issueKey: `Keywords_${group.groupTitle}`,
+                    status: "Keyword",
+                    priority: "Score",
+                    severity: "",
+                    projectKey: "",
+                    issueType: "",
+                    created: "",
+                    assignee: "",
+                    digitalService: "",
+                    summary: "",
+                    description: "",
+                    group: ""
+                }
+            )
+
+            group.keywords.forEach((keyword) => {
+                const keyword_data = keyword.split(": ")
+
+                formattedData.push(
+                    {
+                        issueKey: "",
+                        status: keyword_data[0],
+                        priority: keyword_data[1].toString(),
+                        severity: "",
+                        projectKey: "",
+                        issueType: "",
+                        created: "",
+                        assignee: "",
+                        digitalService: "",
+                        summary: "",
+                        description: "",
+                        group: ""
                     }
                 )
             })

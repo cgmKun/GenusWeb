@@ -3,9 +3,6 @@ import { Row, Select, Typography, Col } from '@douyinfe/semi-ui';
 
 import { fetchReports } from '../graphql/fields'
 import DashboardContent from "../components/Dashboard/DashboardContent";
-// import DefectsOnGroup from "../components/Dashboard/DefectsOnGroup";
-// import GraphGroup from "../components/Dashboard/GraphGroup";
-// import GroupsMetadata from "../components/Dashboard/GroupsMetadata";
 
 import "../styles/Dashboard.scss"
 

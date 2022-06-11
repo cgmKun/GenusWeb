@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Table, Tabs, Collapse } from '@douyinfe/semi-ui';
 
 import InspectDefect from "./DefectsTable/InspectDefect";
-import DownloadReport from './DownloadReport';
+import DownloadReport from '../Actions/DownloadReport';
 
 
 const getRowKey = record => {
@@ -58,6 +58,8 @@ class DefectsOnGroup extends Component {
         const ContentList = [];
         let KeywordsList = [];
         let itemKey = 1; 
+
+        console.log(groups)
 
         groups.forEach(group => {
             const tab = { tab: group.groupTitle, itemKey: itemKey.toString()};
