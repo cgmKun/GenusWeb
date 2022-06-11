@@ -78,8 +78,8 @@ class ClusterizeReport extends Component {
                         <p>{`The report "${report.reportTitle}" defects will be clusterized using the K-means algorithm. Please select the number of clusters desired`}</p>
                         <div style={{ width: 320, marginRight: 15, marginTop: 15 }}>
                             <p>The maximum number of clusters is 50</p>
-                            <Slider step={1} value={sliderValue} onChange={(sliderValue) => (this.getSliderValue(sliderValue))} min={1} max={report.defects.length > 50 ? 50 : report.defects.length} ></Slider>
-                            <InputNumber onChange={(v) => this.getSliderValue(v)} style={{ width: 100 }} value={sliderValue} min={1} max={report.defects.length > 50 ? 50 : report.defects.length} />
+                            <Slider step={1} value={sliderValue} onChange={(sliderValue) => (this.getSliderValue(sliderValue))} min={2} max={report.defects.length > 50 ? 50 : report.defects.length} ></Slider>
+                            <InputNumber onChange={(v) => this.getSliderValue(v)} style={{ width: 100 }} value={sliderValue} min={2} max={report.defects.length > 50 ? 50 : report.defects.length} />
                         </div>
                     </Modal>
                 </Popover>
